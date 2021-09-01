@@ -15,13 +15,18 @@ class MainViewController: BaseViewController {
     private lazy var mainTableView = UITableView(frame: .zero)
     private lazy var thereAreNotNewsLabel = UILabel(frame: .zero)
     private lazy var thereAreNotNewsImage = UIImageView(frame: .zero)
+    private var refreshControl: UIRefreshControl?
     
     private var identifier = "Cell"
+    
+    // MARK: View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = MainPresenter(view: self, service: NewsServices())
     }
+    
+    // MARK: BaseViewController
     
     override func addSubviews() {
         view.addSubview(mainTableView)
@@ -90,6 +95,22 @@ class MainViewController: BaseViewController {
         thereAreNotNewsLabel.text = "noNewsToShow".localized
         thereAreNotNewsLabel.isHidden = true
         thereAreNotNewsImage.isHidden = true
+        
+        setRefreshControl()
+    }
+    
+    // MARK: Public Methods
+    
+    // MARK: UITableView Pull Refresh
+    func setRefreshControl() {
+        refreshControl = UIRefreshControl()
+//        refreshControl!.attributedTitle = NSAttributedString(string: "Actualizar")
+        refreshControl!.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        mainTableView.addSubview(refreshControl!)
+    }
+    
+    @objc func refresh() {
+        presenter?.fetchNewsResetSearch(searchText: "")
     }
 }
 
@@ -136,6 +157,9 @@ extension MainViewController: MainViewProtocol {
     }
     
     public func fetchNewsSuccess(news: [NewsModel]) {
+        if refreshControl != nil {
+            refreshControl!.endRefreshing()
+        }
         mainTableView.reloadData()
         mainTableView.setContentOffset(.zero, animated: true)
     }
