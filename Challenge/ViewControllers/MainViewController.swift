@@ -16,6 +16,7 @@ class MainViewController: BaseViewController {
     private lazy var thereAreNotNewsLabel = UILabel(frame: .zero)
     private lazy var thereAreNotNewsImage = UIImageView(frame: .zero)
     private var refreshControl: UIRefreshControl?
+    var isLoadingList = false
     
     private var identifier = "Cell"
     
@@ -112,6 +113,20 @@ class MainViewController: BaseViewController {
     @objc func refresh() {
         presenter?.fetchNewsResetSearch(searchText: "")
     }
+    
+    // MARK: UITableView scrolldown to view more items
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) && !isLoadingList) {
+            if presenter?.getNewItemsCount() ?? 0 > 0 {
+                isLoadingList = true
+                loadMoreItemsForList()
+            }
+        }
+    }
+    
+    func loadMoreItemsForList() {
+        presenter?.fetchNewsMoreItems()
+    }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -160,6 +175,7 @@ extension MainViewController: MainViewProtocol {
         if refreshControl != nil {
             refreshControl!.endRefreshing()
         }
+        isLoadingList = false
         mainTableView.reloadData()
         mainTableView.setContentOffset(.zero, animated: true)
     }
