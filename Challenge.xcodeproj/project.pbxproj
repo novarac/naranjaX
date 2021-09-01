@@ -15,6 +15,7 @@
 		C9024D6026DC4D33004B39E6 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9024D5F26DC4D33004B39E6 /* NavigationViewController.swift */; };
 		C9024D6D26DC7854004B39E6 /* String+localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9024D6C26DC7854004B39E6 /* String+localize.swift */; };
 		C9A230DB26DEEDC000A6B58F /* UIView+SnapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A230DA26DEEDBF00A6B58F /* UIView+SnapKit.swift */; };
+		C9A230F826E00D8700A6B58F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A230F726E00D8700A6B58F /* BaseViewController.swift */; };
 		C9EAADFD26DD564000A28468 /* ChallengeTestsEndToEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EAADFC26DD564000A28468 /* ChallengeTestsEndToEnd.swift */; };
 		C9EAAE0B26DD571300A28468 /* ChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EAAE0A26DD571300A28468 /* ChallengeTests.swift */; };
 		C9F0CE5426DC238700F85118 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9F0CE5326DC238700F85118 /* Assets.xcassets */; };
@@ -72,6 +73,7 @@
 		C9024D5F26DC4D33004B39E6 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		C9024D6C26DC7854004B39E6 /* String+localize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+localize.swift"; sourceTree = "<group>"; };
 		C9A230DA26DEEDBF00A6B58F /* UIView+SnapKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SnapKit.swift"; sourceTree = "<group>"; };
+		C9A230F726E00D8700A6B58F /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		C9EAADFA26DD564000A28468 /* ChallengeTestsEndToEnd.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChallengeTestsEndToEnd.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9EAADFC26DD564000A28468 /* ChallengeTestsEndToEnd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeTestsEndToEnd.swift; sourceTree = "<group>"; };
 		C9EAADFE26DD564000A28468 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 		C9F0CE7D26DC254D00F85118 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C9A230F726E00D8700A6B58F /* BaseViewController.swift */,
 				C9024D3B26DC3254004B39E6 /* MainViewController.swift */,
 				C9024D5F26DC4D33004B39E6 /* NavigationViewController.swift */,
 			);
@@ -565,6 +568,7 @@
 			files = (
 				C9024D4026DC37B0004B39E6 /* AppDelegate.swift in Sources */,
 				C9A230DB26DEEDC000A6B58F /* UIView+SnapKit.swift in Sources */,
+				C9A230F826E00D8700A6B58F /* BaseViewController.swift in Sources */,
 				C9024D3C26DC3254004B39E6 /* MainViewController.swift in Sources */,
 				C9024D6D26DC7854004B39E6 /* String+localize.swift in Sources */,
 				C9F0CE8526DC26AA00F85118 /* Fonts.swift in Sources */,
