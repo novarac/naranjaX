@@ -10,6 +10,7 @@ public protocol MainViewProtocol: AnyObject {
 class MainViewController: BaseViewController {
     
     public var presenter: MainPresenterProtocol?
+    
     private lazy var loadingView = UIView(frame: .zero)
     private lazy var indicatorView = UIActivityIndicatorView(frame: .zero)
     private lazy var mainTableView = UITableView(frame: .zero)
