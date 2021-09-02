@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 public protocol MainPresenterProtocol: AnyObject {
     func fetchNews(searchText: String)
@@ -6,6 +6,8 @@ public protocol MainPresenterProtocol: AnyObject {
     func fetchNewsMoreItems()
     func getNewItemsCount() -> Int
     func getItemByIndex(item: Int) -> NewsModel?
+    func showFilterView(viewC: UIViewController)
+    func showDetailNewView(viewC: UIViewController, row: Int)
 }
 
 public class MainPresenter: MainPresenterProtocol {
@@ -72,5 +74,18 @@ public class MainPresenter: MainPresenterProtocol {
     
     public func getNews() -> [NewsModel] {
         return news
+    }
+    
+    public func showFilterView(viewC: UIViewController) {
+        let vcFilter = FilterViewController()
+        viewC.present(vcFilter, animated: true, completion: nil)
+//        viewC.navigationController?.pushViewController(vcFilter, animated: true)
+    }
+    
+    public func showDetailNewView(viewC: UIViewController, row: Int) {
+        let vcDetail = DetailNewViewController()
+        vcDetail.currentNew = getItemByIndex(item: row)
+//        viewC.present(vcDetail, animated: true, completion: nil)
+        viewC.navigationController?.pushViewController(vcDetail, animated: true)
     }
 }

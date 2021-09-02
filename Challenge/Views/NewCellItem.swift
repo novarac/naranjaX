@@ -62,7 +62,9 @@ class NewCellItem: UITableViewCell {
     }
 
     func addConfigurations() {
-        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = .primaryColor.withAlphaComponent(0.5)
+        selectedBackgroundView = bgColorView
     }
     
     func configure(forNew new: NewsModel?) {

@@ -1,11 +1,14 @@
-/* Commons */
-
+/* Titles */
 "title_home" = "NaranjaX";
-"seach" = "Buscar...";
+"title_detail_news_item" = "Detalle Noticia";
+"title_filter_item"= "Filtros";
+
+/* Times Ago */
 "ago" = "Hace";
 "hours" = "hora/s";
 "minutes" = "min/s";
 "days" = "d";
 "week" = "sem";
+
+"seach" = "Buscar...";
 "noNewsToShow" = "No hay noticias para visualizar";
-"title_detail_news_item" = "Detalle Noticia";

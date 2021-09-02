@@ -1,7 +1,6 @@
 import UIKit
-import SnapKit
 
-class DetailNewViewController: UIViewController {
+class DetailNewViewController: BaseViewController {
     
     public var presenter: NewDetailPresenter?
     private lazy var loadingView = UIView(frame: .zero)
@@ -16,17 +15,12 @@ class DetailNewViewController: UIViewController {
     var currentNew: NewsModel!
     
     override func viewDidLoad() {
-        let presenter = NewDetailPresenter(newDetailView: self, newsService: NewsServices())
-        self.presenter = presenter
-        addSubviews()
-        addStyles()
-        addConstraints()
-        addConfigurations()
-        
-        self.presenter?.fetchNewItem(apiURL: self.currentNew.apiUrl ?? "")
+        super.viewDidLoad()
+        presenter = NewDetailPresenter(newDetailView: self, newsService: NewsServices())
+        presenter?.fetchNewItem(apiURL: currentNew.apiUrl ?? "")
     }
     
-    func addSubviews() {
+    override func addSubviews() {
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(mainStackView)
         mainStackView.addArrangedSubview(image)
@@ -38,7 +32,7 @@ class DetailNewViewController: UIViewController {
         loadingView.addSubview(indicatorView)
     }
     
-    func addStyles() {
+    override func addStyle() {
         view.backgroundColor = .white
         mainScrollView.backgroundColor = .lightGray.withAlphaComponent(0.5)
         mainStackView.backgroundColor = .white
@@ -68,7 +62,7 @@ class DetailNewViewController: UIViewController {
         indicatorView.style = .medium
     }
     
-    func addConstraints() {
+    override func addConstraints() {
         mainScrollView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -112,7 +106,7 @@ class DetailNewViewController: UIViewController {
         }
     }
     
-    func addConfigurations() {
+    override func addConfiguration() {
         title = "title_detail_news_item".localized
         
         mainStackView.axis = .vertical
