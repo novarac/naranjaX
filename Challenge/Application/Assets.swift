@@ -13,6 +13,8 @@ enum CommonAssets: String, AssetsProvider {
     case filter = "Filter"
     case iconApp = "IconApp"
     case iconGrayApp = "IconGrayApp"
+    case star = "Star"
+    case naranjaXlogoNavBar = "NaranjaXlogoNavBar"
     
     var name: String { rawValue }
     var image: UIImage { UIImage(named: rawValue)! }

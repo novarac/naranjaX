@@ -18,6 +18,7 @@ class MainViewController: BaseViewController {
     private lazy var mainTableView = UITableView(frame: .zero)
     private lazy var thereAreNotNewsLabel = UILabel(frame: .zero)
     private lazy var thereAreNotNewsImage = UIImageView(frame: .zero)
+    private lazy var splashScreenView = SplashScreenView(frame: .zero)
     private var refreshControl: UIRefreshControl?
     var isLoadingList = false
     
@@ -126,7 +127,10 @@ class MainViewController: BaseViewController {
     }
     
     override func addConfiguration() {
-        title = "title_home".localized
+        let logoTitleView = UIImageView(image: CommonAssets.naranjaXlogoNavBar.image)
+        logoTitleView.contentMode = .scaleAspectFit
+        navigationItem.titleView = logoTitleView
+        navigationItem.titleView?.sizeToFit()
         
         mainTableView.delegate = self
         mainTableView.dataSource = self
@@ -144,9 +148,28 @@ class MainViewController: BaseViewController {
         filterButton.addTarget(self, action: #selector(pressButtonFilter), for: .touchUpInside)
         
         setRefreshControl()
+        
+        showScreenApp()
     }
     
     // MARK: Public Methods
+    
+    func showScreenApp() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActiveNotification), name: UIApplication.willResignActiveNotification, object: nil)
+    }
+    
+    @objc func didBecomeActiveNotification() {
+        splashScreenView.removeFromSuperview()
+    }
+        
+    @objc func willResignActiveNotification() {
+        getTopMostViewController()?.view.addSubview(splashScreenView)
+        splashScreenView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
     
     @objc func pressButtonFilter() {
         presenter?.showFilterView(viewC: self)
@@ -198,6 +221,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? NewCellItem
         cell?.configure(forNew: presenter?.getItemByIndex(item: indexPath.row))
+        if indexPath.row % 2 == 0 {
+            cell?.backgroundColor = .backgroundCells //.withAlphaComponent(0.1)
+        } else {
+            cell?.backgroundColor = .white
+        }
         return cell ?? UITableViewCell()
     }
     

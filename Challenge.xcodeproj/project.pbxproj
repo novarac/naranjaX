@@ -14,6 +14,9 @@
 		C9024D4726DC3A3E004B39E6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9024D4626DC3A3E004B39E6 /* Constants.swift */; };
 		C9024D6026DC4D33004B39E6 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9024D5F26DC4D33004B39E6 /* NavigationViewController.swift */; };
 		C9024D6D26DC7854004B39E6 /* String+localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9024D6C26DC7854004B39E6 /* String+localize.swift */; };
+		C976F4F826E1031900E25531 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976F4F726E1031900E25531 /* StarView.swift */; };
+		C976F4FA26E10AA300E25531 /* UIStackView+removeAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976F4F926E10AA300E25531 /* UIStackView+removeAll.swift */; };
+		C976F4FC26E10EBA00E25531 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976F4FB26E10EBA00E25531 /* SplashScreenView.swift */; };
 		C9A230DB26DEEDC000A6B58F /* UIView+SnapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A230DA26DEEDBF00A6B58F /* UIView+SnapKit.swift */; };
 		C9A230F826E00D8700A6B58F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A230F726E00D8700A6B58F /* BaseViewController.swift */; };
 		C9A2310126E010CC00A6B58F /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A230FB26E010CC00A6B58F /* NewsModel.swift */; };
@@ -96,6 +99,9 @@
 		C9024D4626DC3A3E004B39E6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C9024D5F26DC4D33004B39E6 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		C9024D6C26DC7854004B39E6 /* String+localize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+localize.swift"; sourceTree = "<group>"; };
+		C976F4F726E1031900E25531 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
+		C976F4F926E10AA300E25531 /* UIStackView+removeAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+removeAll.swift"; sourceTree = "<group>"; };
+		C976F4FB26E10EBA00E25531 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		C9A230DA26DEEDBF00A6B58F /* UIView+SnapKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SnapKit.swift"; sourceTree = "<group>"; };
 		C9A230F726E00D8700A6B58F /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		C9A230FB26E010CC00A6B58F /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
@@ -229,6 +235,7 @@
 				C9A2311926E0114800A6B58F /* String+Date.swift */,
 				C9C9DD4C26E05F7900F563E4 /* String+HTML.swift */,
 				C9024D6C26DC7854004B39E6 /* String+localize.swift */,
+				C976F4F926E10AA300E25531 /* UIStackView+removeAll.swift */,
 				C9A230DA26DEEDBF00A6B58F /* UIView+SnapKit.swift */,
 			);
 			path = Extentions;
@@ -398,7 +405,9 @@
 			children = (
 				C9C9DD5426E07A9E00F563E4 /* BaseView.swift */,
 				C9A2311C26E0115A00A6B58F /* NewCellItem.swift */,
+				C976F4FB26E10EBA00E25531 /* SplashScreenView.swift */,
 				C9C9DD5226E079F300F563E4 /* StarRatingView.swift */,
+				C976F4F726E1031900E25531 /* StarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -694,8 +703,10 @@
 				C9024D4026DC37B0004B39E6 /* AppDelegate.swift in Sources */,
 				C9C9DD4926E05EEB00F563E4 /* NewDetailPresenter.swift in Sources */,
 				C9A230DB26DEEDC000A6B58F /* UIView+SnapKit.swift in Sources */,
+				C976F4FA26E10AA300E25531 /* UIStackView+removeAll.swift in Sources */,
 				C9A230F826E00D8700A6B58F /* BaseViewController.swift in Sources */,
 				C9A2311A26E0114800A6B58F /* Date+TimeAgo.swift in Sources */,
+				C976F4FC26E10EBA00E25531 /* SplashScreenView.swift in Sources */,
 				C9A2311D26E0115A00A6B58F /* NewCellItem.swift in Sources */,
 				C9A2310626E010CC00A6B58F /* GetNewsItemContent.swift in Sources */,
 				C9A2311226E0110000A6B58F /* APIClient.swift in Sources */,
@@ -704,6 +715,7 @@
 				C9024D6D26DC7854004B39E6 /* String+localize.swift in Sources */,
 				C9A2311426E0110000A6B58F /* Environment.swift in Sources */,
 				C9C9DD5326E079F300F563E4 /* StarRatingView.swift in Sources */,
+				C976F4F826E1031900E25531 /* StarView.swift in Sources */,
 				C9A2310826E010D900A6B58F /* BaseResponse.swift in Sources */,
 				C9F0CE8526DC26AA00F85118 /* Fonts.swift in Sources */,
 				C9F0CE8626DC26AA00F85118 /* Theme.swift in Sources */,

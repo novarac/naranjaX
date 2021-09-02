@@ -13,27 +13,42 @@ class StarRatingView: BaseView {
     }
 
     override func addStyle() {
-        backgroundColor = .red
-        
-        quantityStarLabel.font = .regular(12)
+        quantityStarLabel.font = .medium(12)
         quantityStarLabel.textAlignment = .center
         quantityStarLabel.textColor = .red
     }
 
     override func addConstraints() {
         quantityStarLabel.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview()
+            make.leading.equalTo(contentImages.snp.trailing).offset(10)
             make.centerY.equalToSuperview()
+        }
+        
+        contentImages.snp.makeConstraints { make in
+            make.leading.top.bottom.equalToSuperview()
+            make.width.equalTo(70)
         }
     }
 
     override func addConfigurations() {
-        quantityStarLabel.text = "3"
+        contentImages.axis = .horizontal
+        contentImages.distribution = .fillEqually
+        contentImages.spacing = 2
     }
     
     // MARK: Public Methods
     
-    func configure(forQuantityStars quantityStars: String?) {
-        quantityStarLabel.text = quantityStars
+    func configure(forQuantityStars quantityStars: String) {
+        quantityStarLabel.text = "" //quantityStars
+        contentImages.removeAllArrangedSubviews()
+        for starIndex in 0...5 {
+            let star = StarView(frame: .zero)
+            contentImages.addArrangedSubview(star)
+            if starIndex > Int(quantityStars) ?? 0 {
+                star.configure(isOn: false)
+            } else {
+                star.configure(isOn: true)
+            }
+        }
     }
 }

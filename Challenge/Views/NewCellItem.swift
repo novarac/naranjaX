@@ -63,13 +63,14 @@ class NewCellItem: UITableViewCell {
         }
         
         starRatingView.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().inset(20)
             make.leading.equalTo(image.snp.trailing).offset(10)
-            
+            make.width.equalTo(90)
         }
         
         sectionLabel.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(10)
+            make.bottom.equalTo(starRatingView.snp.top).offset(-10)
+//            make.top.equalTo(starRatingView.snp.bottom).inset(20)
             make.leading.equalTo(image.snp.trailing).offset(10)
         }
                 
@@ -89,7 +90,9 @@ class NewCellItem: UITableViewCell {
         currentNew = new
         
         titleLabel.text = new?.webTitle
-        starRatingView.configure(forQuantityStars: new?.fields?.starRating)
+        if let quantity = new?.fields?.starRating {
+            starRatingView.configure(forQuantityStars: quantity)
+        }
         sectionLabel.text = new?.sectionName
         
         if let date = new?.webPublicationDate?.getFormattedDate(
