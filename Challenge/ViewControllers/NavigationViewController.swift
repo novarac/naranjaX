@@ -19,7 +19,7 @@ final class NavigationViewController: UINavigationController {
         navigationBar.backIndicatorTransitionMaskImage = CommonAssets.backArrow.image
         navigationBar.tintColor = .white
         navigationBar.barTintColor = .primaryColor
-        navigationBar.isTranslucent = true
+        navigationBar.isTranslucent = false
 
         let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
                               NSAttributedString.Key.font: UIFont.bold(16)]

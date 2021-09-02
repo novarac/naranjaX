@@ -139,7 +139,7 @@ extension DetailNewViewController: NewDetailProtocol {
         }
 
         if let url = URL(string: newsItem.fields?.thumbnail ?? "") {
-            image.kf.setImage(with: url)
+            image.kf.setImage(with: url, placeholder: CommonAssets.iconGrayApp.image)
             image.clipsToBounds = true
         }
         mainStackView.isHidden = false
