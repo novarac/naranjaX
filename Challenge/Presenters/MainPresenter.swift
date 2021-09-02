@@ -33,7 +33,21 @@ public class MainPresenter: MainPresenterProtocol {
             currSearchText = searchText
         }
         
-        service?.fetchNews(searchText: currSearchText, indexPage: currentPage) { [weak self] (news, error) in
+        let fieldsString = "starRating,headline,thumbnail,short-url"
+        let escapedFieldsString = fieldsString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        
+        let searchNewFiltersParams = SearchNewFiltersRequest(query: currSearchText,
+                                                       startIndex: 1,
+                                                       pageSize: 10,
+                                                       page: currentPage,
+                                                       format: "json",
+                                                       fromDate: "2021-01-01",
+                                                       showTags: "contributor",
+                                                       showFields: escapedFieldsString,
+                                                       orderBy: "relevance", //relevance, newest, oldest, none
+                                                       tag: "film/film,tone/reviews")
+        
+        service?.fetchNews(params: searchNewFiltersParams) { [weak self] (news, error) in
             guard let weakSelf = self else {
                 return
             }

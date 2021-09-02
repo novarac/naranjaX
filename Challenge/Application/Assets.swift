@@ -11,8 +11,8 @@ enum CommonAssets: String, AssetsProvider {
     case backArrow = "BackArrow"
     case noNews = "NoNews"
     case filter = "Filter"
-    case iconApp = "IconApp"
-    case iconGrayApp = "IconGrayApp"
+    case iconApp = "iconApp"
+    case iconGrayApp = "iconGrayApp"
     case star = "Star"
     case naranjaXlogoNavBar = "NaranjaXlogoNavBar"
     

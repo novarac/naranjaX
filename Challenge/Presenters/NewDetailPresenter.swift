@@ -13,14 +13,19 @@ class NewDetailPresenter {
     let newsService: NewsServicesProtocol
     var newItem: NewsModel?
     
-    init(newDetailView: NewDetailProtocol, newsService: NewsServicesProtocol) {
+    init(newDetailView: NewDetailProtocol, newsService: NewsServicesProtocol, newSelected: NewsModel?) {
         self.newDetailView = newDetailView
         self.newsService = newsService
+        newItem = newSelected
+        fetchNewItem(apiURL: newItem?.apiUrl ?? "")
     }
     
     func fetchNewItem(apiURL: String) {
         newDetailView?.showLoader()
-        newsService.fetchNewByURL(url: apiURL) { [weak self] (news, error) in
+        
+        let params = SearchNewFiltersRequest(showFields: "all")
+        
+        newsService.fetchNewByURL(url: apiURL, params: params) { [weak self] (news, error) in
             guard let weakSelf = self else {
                 return
             }

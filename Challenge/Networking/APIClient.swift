@@ -3,12 +3,14 @@ import Alamofire
 class APICLient {
     
     func getEntity<T: BaseResponse>(
-        endpoint: String,
+        endpoint: String? = nil,
+        url: String? = nil,
         parameters: [String: Any]? = nil,
         environment: EnvironmentDelegate? = nil,
         completion:@escaping (_ entity: T?, _ error: Error?) -> Void) {
         createRequest(
             endpoint: endpoint,
+            url: url,
             method: .get,
             parameters: parameters,
             encoding: URLEncoding.default,
@@ -20,27 +22,15 @@ class APICLient {
             }
     }
     
-    func getEntity<T: BaseResponse>(
-        url: String,
-        completion:@escaping (_ entity: T?, _ error: Error?) -> Void) {
-        createRequest(
-            url: url,
-            method: .get,
-            encoding: URLEncoding.default)
-            .responseDecodable(of: T.self) { (response) in
-                APIErrorHandler().validateResponse(response, completion: { (entity, error) in
-                    completion(entity, error)
-                })
-            }
-    }
-    
     func getIsoLatinEntity<T: BaseResponse>(
-        endpoint: String,
+        endpoint: String? = nil,
+        url: String? = nil,
         parameters: [String: Any]? = nil,
         environment: EnvironmentDelegate? = nil,
         completion:@escaping (_ entity: T?, _ error: Error?) -> Void) {
         createRequest(
             endpoint: endpoint,
+            url: url,
             method: .get,
             parameters: parameters,
             encoding: URLEncoding.default,
@@ -53,12 +43,14 @@ class APICLient {
     }
 
     func postEntity<T: BaseResponse>(
-        endpoint: String,
+        endpoint: String? = nil,
+        url: String? = nil,
         parameters: [String: Any]? = nil,
         environment: EnvironmentDelegate? = nil,
         completion:@escaping (_ entity: T?, _ error: Error?) -> Void) {
         createRequest(
             endpoint: endpoint,
+            url: url,
             method: .post,
             parameters: parameters,
             encoding: JSONEncoding.default,
@@ -71,12 +63,14 @@ class APICLient {
     }
 
     func postIsoLatinEntity<T: BaseResponse>(
-        endpoint: String,
+        endpoint: String? = nil,
+        url: String? = nil,
         parameters: [String: Any]? = nil,
         environment: EnvironmentDelegate? = nil,
         completion:@escaping (_ entity: T?, _ error: Error?) -> Void) {
         createRequest(
             endpoint: endpoint,
+            url: url,
             method: .post,
             parameters: parameters,
             encoding: JSONEncoding.default,
@@ -89,13 +83,15 @@ class APICLient {
     }
 
     func putEntity<T: BaseResponse>(
-        endpoint: String,
+        endpoint: String? = nil,
+        url: String? = nil,
         parameters: [String: Any]? = nil,
         environment: EnvironmentDelegate? = nil,
         completion:@escaping (_ entity: T?, _ error: Error?) -> Void) {
 
         createRequest(
             endpoint: endpoint,
+            url: url,
             method: .put,
             parameters: parameters,
             encoding: JSONEncoding.default,
@@ -109,11 +105,13 @@ class APICLient {
 
     func getJson<T: Decodable>(
         environment: EnvironmentDelegate,
-        endpoint: String,
+        endpoint: String? = nil,
+        url: String? = nil,
         completion:@escaping (_ entity: T?, _ error: Error?) -> Void) {
 
         createRequest(
             endpoint: endpoint,
+            url: url,
             method: .get,
             parameters: nil,
             encoding: CustomURLEncoding(),
@@ -124,49 +122,35 @@ class APICLient {
     }
     
     func createRequest(
-        endpoint: String,
+        endpoint: String?,
+        url: String?,
         method: Alamofire.HTTPMethod,
         parameters: [String: Any]?,
         encoding: ParameterEncoding,
         environment: EnvironmentDelegate? = nil) -> DataRequest {
 
-        var urlString = APIEnvironment().path(endpoint)
-        if let environment = environment {
-            urlString = environment.path(endpoint)
+        var urlString = ""
+        if let url = url {
+            urlString = url
+        }
+        if let endpoint = endpoint {
+            urlString = APIEnvironment().path(endpoint)
+            if let environment = environment {
+                urlString = environment.path(endpoint)
+            }
         }
         
-        let params = parameters ?? [:]
+        var params = parameters ?? [:]
 
-        var headers = HTTPHeaders()
-
+        params["api-key"] = Constants.apiKey
+        
+//        var headers = HTTPHeaders()
 //        if let token = Session.shared.user?.token {
 //            headers["Authorization"] = "Bearer \(token)"
 //        }
 
         debugPrint(urlString)
-        let request = AF.request(urlString, method: method, parameters: params, encoding: encoding, headers: headers)
-            .responseString { response in
-                debugPrint("Request: \(response.debugDescription)")
-                debugPrint("Response: \(response)")
-        }
-        
-        return request
-    }
-    
-    func createRequest(
-        url: String,
-        method: Alamofire.HTTPMethod,
-        encoding: ParameterEncoding) -> DataRequest {
-
-        let urlString = url
-        let headers = HTTPHeaders()
-
-//        if let token = Session.shared.user?.token {
-//            headers["Authorization"] = "Bearer \(token)"
-//        }
-
-        debugPrint(urlString)
-        let request = AF.request(urlString, method: method, parameters: nil, encoding: encoding, headers: headers)
+        let request = AF.request(urlString, method: method, parameters: params, encoding: encoding, headers: nil)
             .responseString { response in
                 debugPrint("Request: \(response.debugDescription)")
                 debugPrint("Response: \(response)")

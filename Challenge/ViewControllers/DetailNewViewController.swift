@@ -12,12 +12,13 @@ class DetailNewViewController: BaseViewController {
     private lazy var headerLabel = UILabel(frame: .zero)
     private lazy var bodyLabel = UILabel(frame: .zero)
     private lazy var image = UIImageView(frame: .zero)
-    var currentNew: NewsModel!
+    var currentNew: NewsModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = NewDetailPresenter(newDetailView: self, newsService: NewsServices())
-        presenter?.fetchNewItem(apiURL: currentNew.apiUrl ?? "")
+        presenter = NewDetailPresenter(newDetailView: self,
+                                       newsService: NewsServices(),
+                                       newSelected: currentNew)
     }
     
     override func addSubviews() {
@@ -64,9 +65,7 @@ class DetailNewViewController: BaseViewController {
     
     override func addConstraints() {
         mainScrollView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         mainStackView.snp.makeConstraints { (make) in
