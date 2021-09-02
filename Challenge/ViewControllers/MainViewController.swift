@@ -10,6 +10,8 @@ public protocol MainViewProtocol: AnyObject {
 class MainViewController: BaseViewController {
     
     public var presenter: MainPresenterProtocol?
+    private lazy var headerView = UIView(frame: .zero)
+    private lazy var searchBarView = UISearchBar(frame: .zero)
     private lazy var loadingView = UIView(frame: .zero)
     private lazy var indicatorView = UIActivityIndicatorView(frame: .zero)
     private lazy var mainTableView = UITableView(frame: .zero)
@@ -30,6 +32,8 @@ class MainViewController: BaseViewController {
     // MARK: BaseViewController
     
     override func addSubviews() {
+        view.addSubview(headerView)
+        headerView.addSubview(searchBarView)
         view.addSubview(mainTableView)
         view.addSubview(thereAreNotNewsLabel)
         view.addSubview(thereAreNotNewsImage)
@@ -38,9 +42,24 @@ class MainViewController: BaseViewController {
     }
     
     override func addStyle() {
-        view.backgroundColor = .white
+        view.backgroundColor = .backgroundSections
 
-        mainTableView.backgroundColor = .lightGray.withAlphaComponent(0.5)
+        headerView.backgroundColor = .white
+        
+        searchBarView.tintColor = UIColor.white
+        searchBarView.barTintColor = UIColor.white
+                
+        if let textfield = searchBarView.value(forKey: "searchField") as? UITextField {
+            textfield.textColor = UIColor.black
+            textfield.backgroundColor = .primaryColor.withAlphaComponent(0.5)
+            if let backgroundview = textfield.subviews.first {
+                backgroundview.backgroundColor = UIColor.white
+                backgroundview.layer.cornerRadius = 10
+                backgroundview.clipsToBounds = true
+            }
+        }
+        
+        mainTableView.backgroundColor = .clear //.lightGray.withAlphaComponent(0.5)
         mainTableView.separatorStyle = .none
         mainTableView.separatorColor = .secondaryColor
         
@@ -59,14 +78,26 @@ class MainViewController: BaseViewController {
     }
     
     override func addConstraints() {
-        mainTableView.snp.makeConstraints { make in
+        headerView.snp.makeConstraints { make in
             make.top.equalTo(view.safeArea.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(60)
+        }
+        
+        searchBarView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(10)
+        }
+        
+        mainTableView.snp.makeConstraints { make in
+            make.top.equalTo(headerView.snp.bottom)
             make.bottom.leading.trailing.equalToSuperview()
         }
         
         thereAreNotNewsImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-50)
+            make.centerY.equalToSuperview()
             make.width.height.equalTo(60)
         }
         
@@ -98,6 +129,9 @@ class MainViewController: BaseViewController {
         thereAreNotNewsImage.isHidden = true
         
         setRefreshControl()
+        
+        searchBarView.delegate = self
+        searchBarView.placeholder = "seach".localized
     }
     
     // MARK: Public Methods
@@ -105,17 +139,18 @@ class MainViewController: BaseViewController {
     // MARK: UITableView Pull Refresh
     func setRefreshControl() {
         refreshControl = UIRefreshControl()
-//        refreshControl!.attributedTitle = NSAttributedString(string: "Actualizar")
+        refreshControl!.attributedTitle = NSAttributedString(string: "↓ Actualizar ↓")
         refreshControl!.addTarget(self, action: #selector(refresh), for: .valueChanged)
         mainTableView.addSubview(refreshControl!)
     }
     
     @objc func refresh() {
-        presenter?.fetchNewsResetSearch(searchText: "")
+        presenter?.fetchNewsResetSearch(searchText: searchBarView.text ?? "")
     }
     
     // MARK: UITableView scrolldown to view more items
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchBarView.resignFirstResponder()
         if (((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) && !isLoadingList) {
             if presenter?.getNewItemsCount() ?? 0 > 0 {
                 isLoadingList = true
@@ -137,9 +172,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if countItems > 0 {
             thereAreNotNewsLabel.isHidden = true
             thereAreNotNewsImage.isHidden = true
+            mainTableView.isHidden = false
         } else {
             thereAreNotNewsLabel.isHidden = false
             thereAreNotNewsImage.isHidden = false
+            mainTableView.isHidden = true
         }
         return countItems
     }
@@ -155,6 +192,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        searchBarView.resignFirstResponder()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -182,5 +220,19 @@ extension MainViewController: MainViewProtocol {
     
     public func fetchNewsError() {
         print("fetchNewsError")
+    }
+}
+
+extension MainViewController: UISearchBarDelegate {
+    
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if let text = searchBar.text, text.isEmpty {
+            presenter?.fetchNewsResetSearch(searchText: "")
+        }
+    }
+
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        presenter?.fetchNews(searchText: searchBar.text ?? "")
+        searchBar.resignFirstResponder()
     }
 }

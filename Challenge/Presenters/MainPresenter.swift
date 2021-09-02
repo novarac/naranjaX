@@ -61,11 +61,6 @@ public class MainPresenter: MainPresenterProtocol {
         fetchNews(searchText: currSearchText)
     }
     
-//    public func fetchNews() {
-//        currentPage += 1
-//        fetchNews(searchText: currSearchText)
-//    }
-    
     public func getNewItemsCount() -> Int {
         return news.count
     }
