@@ -12,6 +12,7 @@ class MainViewController: BaseViewController {
     public var presenter: MainPresenterProtocol?
     private lazy var headerView = UIView(frame: .zero)
     private lazy var searchBarView = UISearchBar(frame: .zero)
+    private lazy var filterButton = UIButton(frame: .zero)
     private lazy var loadingView = UIView(frame: .zero)
     private lazy var indicatorView = UIActivityIndicatorView(frame: .zero)
     private lazy var mainTableView = UITableView(frame: .zero)
@@ -34,6 +35,7 @@ class MainViewController: BaseViewController {
     override func addSubviews() {
         view.addSubview(headerView)
         headerView.addSubview(searchBarView)
+        headerView.addSubview(filterButton)
         view.addSubview(mainTableView)
         view.addSubview(thereAreNotNewsLabel)
         view.addSubview(thereAreNotNewsImage)
@@ -46,14 +48,17 @@ class MainViewController: BaseViewController {
 
         headerView.backgroundColor = .white
         
-        searchBarView.tintColor = UIColor.white
-        searchBarView.barTintColor = UIColor.white
+        searchBarView.tintColor = .white
+        searchBarView.barTintColor = .white
+        
+        filterButton.setImage(CommonAssets.filter.image.withRenderingMode(.alwaysTemplate), for: .normal)
+        filterButton.tintColor = .lightGray
                 
         if let textfield = searchBarView.value(forKey: "searchField") as? UITextField {
-            textfield.textColor = UIColor.black
+            textfield.textColor = .black
             textfield.backgroundColor = .primaryColor.withAlphaComponent(0.5)
             if let backgroundview = textfield.subviews.first {
-                backgroundview.backgroundColor = UIColor.white
+                backgroundview.backgroundColor = .white
                 backgroundview.layer.cornerRadius = 10
                 backgroundview.clipsToBounds = true
             }
@@ -73,7 +78,7 @@ class MainViewController: BaseViewController {
         
         loadingView.backgroundColor = .black.withAlphaComponent(0.2)
         
-        indicatorView.color = .white
+        indicatorView.color = .primaryColor
         indicatorView.style = .medium
     }
     
@@ -87,7 +92,13 @@ class MainViewController: BaseViewController {
         searchBarView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(10)
-            make.trailing.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(60)
+        }
+        
+        filterButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(20)
+            make.width.height.equalTo(30)
         }
         
         mainTableView.snp.makeConstraints { make in
@@ -128,18 +139,27 @@ class MainViewController: BaseViewController {
         thereAreNotNewsLabel.isHidden = true
         thereAreNotNewsImage.isHidden = true
         
-        setRefreshControl()
-        
         searchBarView.delegate = self
         searchBarView.placeholder = "seach".localized
+        
+        filterButton.addTarget(self, action: #selector(pressButtonFilter), for: .touchUpInside)
+        
+        setRefreshControl()
     }
     
     // MARK: Public Methods
     
+    @objc func pressButtonFilter() {
+        presenter?.showFilterView(viewC: self)
+    }
+    
     // MARK: UITableView Pull Refresh
     func setRefreshControl() {
         refreshControl = UIRefreshControl()
-        refreshControl!.attributedTitle = NSAttributedString(string: "↓ Actualizar ↓")
+        refreshControl!.backgroundColor = .clear
+        refreshControl!.tintColor = .primaryColor
+        let attributesFontColor = [NSAttributedString.Key.foregroundColor: UIColor.primaryColor]
+        refreshControl!.attributedTitle = NSAttributedString(string: "↓ Actualizar ↓", attributes: attributesFontColor)
         refreshControl!.addTarget(self, action: #selector(refresh), for: .valueChanged)
         mainTableView.addSubview(refreshControl!)
     }
@@ -169,35 +189,22 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let countItems = presenter?.getNewItemsCount() else { return 0}
         
-        if countItems > 0 {
-            thereAreNotNewsLabel.isHidden = true
-            thereAreNotNewsImage.isHidden = true
-            mainTableView.isHidden = false
-        } else {
-            thereAreNotNewsLabel.isHidden = false
-            thereAreNotNewsImage.isHidden = false
-            mainTableView.isHidden = true
-        }
+        thereAreNotNewsLabel.isHidden = countItems > 0 ? true : false
+        thereAreNotNewsImage.isHidden = countItems > 0 ? true : false
+        mainTableView.isHidden = countItems > 0 ? false : true
+        
         return countItems
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? NewCellItem
-        let newItem = presenter?.getItemByIndex(item: indexPath.row)
-        cell?.configure(forNew: newItem)
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = .primaryColor.withAlphaComponent(0.5)
-        cell?.selectedBackgroundView = bgColorView
+        cell?.configure(forNew: presenter?.getItemByIndex(item: indexPath.row))
         return cell ?? UITableViewCell()
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchBarView.resignFirstResponder()
-        let newItem = presenter?.getItemByIndex(item: indexPath.row)
-        let vcDetail = DetailNewViewController()
-        vcDetail.currentNew = newItem
-//        present(vcDetail, animated: true, completion: nil)
-        navigationController?.pushViewController(vcDetail, animated: true)
+        presenter?.showDetailNewView(viewC: self, row: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -215,8 +222,8 @@ extension MainViewController: MainViewProtocol {
     }
     
     public func fetchNewsSuccess(news: [NewsModel]) {
-        if refreshControl != nil {
-            refreshControl!.endRefreshing()
+        if let refreshControl = refreshControl {
+            refreshControl.endRefreshing()
         }
         isLoadingList = false
         mainTableView.reloadData()

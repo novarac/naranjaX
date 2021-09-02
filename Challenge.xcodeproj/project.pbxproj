@@ -36,6 +36,8 @@
 		C9C9DD4926E05EEB00F563E4 /* NewDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9DD4826E05EEB00F563E4 /* NewDetailPresenter.swift */; };
 		C9C9DD4B26E05F0F00F563E4 /* DetailNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9DD4A26E05F0F00F563E4 /* DetailNewViewController.swift */; };
 		C9C9DD4D26E05F7900F563E4 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9DD4C26E05F7900F563E4 /* String+HTML.swift */; };
+		C9C9DD4F26E0639C00F563E4 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9DD4E26E0639C00F563E4 /* FilterViewController.swift */; };
+		C9C9DD5126E0656B00F563E4 /* FilterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9DD5026E0656A00F563E4 /* FilterPresenter.swift */; };
 		C9EAADFD26DD564000A28468 /* ChallengeTestsEndToEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EAADFC26DD564000A28468 /* ChallengeTestsEndToEnd.swift */; };
 		C9EAAE0B26DD571300A28468 /* ChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EAAE0A26DD571300A28468 /* ChallengeTests.swift */; };
 		C9F0CE5426DC238700F85118 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9F0CE5326DC238700F85118 /* Assets.xcassets */; };
@@ -114,6 +116,8 @@
 		C9C9DD4826E05EEB00F563E4 /* NewDetailPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDetailPresenter.swift; sourceTree = "<group>"; };
 		C9C9DD4A26E05F0F00F563E4 /* DetailNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailNewViewController.swift; sourceTree = "<group>"; };
 		C9C9DD4C26E05F7900F563E4 /* String+HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HTML.swift"; sourceTree = "<group>"; };
+		C9C9DD4E26E0639C00F563E4 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		C9C9DD5026E0656A00F563E4 /* FilterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPresenter.swift; sourceTree = "<group>"; };
 		C9EAADFA26DD564000A28468 /* ChallengeTestsEndToEnd.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChallengeTestsEndToEnd.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9EAADFC26DD564000A28468 /* ChallengeTestsEndToEnd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeTestsEndToEnd.swift; sourceTree = "<group>"; };
 		C9EAADFE26DD564000A28468 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -280,6 +284,7 @@
 		C9A2311E26E0116F00A6B58F /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
+				C9C9DD5026E0656A00F563E4 /* FilterPresenter.swift */,
 				C9A2311F26E0116F00A6B58F /* MainPresenter.swift */,
 				C9C9DD4826E05EEB00F563E4 /* NewDetailPresenter.swift */,
 			);
@@ -377,6 +382,7 @@
 			children = (
 				C9A230F726E00D8700A6B58F /* BaseViewController.swift */,
 				C9C9DD4A26E05F0F00F563E4 /* DetailNewViewController.swift */,
+				C9C9DD4E26E0639C00F563E4 /* FilterViewController.swift */,
 				C9024D3B26DC3254004B39E6 /* MainViewController.swift */,
 				C9024D5F26DC4D33004B39E6 /* NavigationViewController.swift */,
 			);
@@ -700,9 +706,11 @@
 				C9A2311326E0110000A6B58F /* CustomURLEncoding.swift in Sources */,
 				C9024D6026DC4D33004B39E6 /* NavigationViewController.swift in Sources */,
 				C9A2311526E0110000A6B58F /* APIEnvironment.swift in Sources */,
+				C9C9DD4F26E0639C00F563E4 /* FilterViewController.swift in Sources */,
 				C9024D3E26DC33B4004B39E6 /* SceneDelegate.swift in Sources */,
 				C9A2310326E010CC00A6B58F /* GetNewsFields.swift in Sources */,
 				C9C9DD4D26E05F7900F563E4 /* String+HTML.swift in Sources */,
+				C9C9DD5126E0656B00F563E4 /* FilterPresenter.swift in Sources */,
 				C9A2311726E0110000A6B58F /* NewsServices.swift in Sources */,
 				C9024D4726DC3A3E004B39E6 /* Constants.swift in Sources */,
 			);
