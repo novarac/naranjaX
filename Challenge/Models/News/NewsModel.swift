@@ -9,11 +9,11 @@ public class NewsModel: NSObject, Decodable {
     var fields: NewsFieldsModel?
     
     enum CodingKeys: String, CodingKey {
-        case webPublicationDate = "webPublicationDate"
-        case webTitle = "webTitle"
-        case apiUrl = "apiUrl"
-        case sectionName = "sectionName"
-        case fields = "fields"
+        case webPublicationDate
+        case webTitle
+        case apiUrl
+        case sectionName
+        case fields
     }
     
     override required convenience init() {

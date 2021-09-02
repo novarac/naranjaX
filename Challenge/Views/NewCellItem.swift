@@ -65,18 +65,17 @@ class NewCellItem: UITableViewCell {
         starRatingView.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(20)
             make.leading.equalTo(image.snp.trailing).offset(10)
-            make.width.equalTo(90)
+            make.width.equalTo(70)
         }
         
         sectionLabel.snp.makeConstraints { make in
             make.bottom.equalTo(starRatingView.snp.top).offset(-10)
-//            make.top.equalTo(starRatingView.snp.bottom).inset(20)
             make.leading.equalTo(image.snp.trailing).offset(10)
         }
                 
         image.snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview().inset(1)
-            make.width.equalTo(160)
+            make.top.leading.bottom.equalToSuperview().inset(0)
+            make.width.equalTo(180)
         }
     }
 

@@ -10,11 +10,11 @@ class NewsFieldsModel: Codable {
     var starRating: String?
     
     enum CodingKeys: String, CodingKey {
-        case headline = "headline"
-        case main = "main"
-        case body = "body"
-        case thumbnail = "thumbnail"
-        case bodyText = "bodyText"
-        case starRating = "starRating"
+        case headline
+        case main
+        case body
+        case thumbnail
+        case bodyText
+        case starRating
     }
 }

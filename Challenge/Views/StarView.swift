@@ -1,5 +1,4 @@
 import UIKit
-import Kingfisher
 
 class StarView: BaseView {
 
@@ -28,7 +27,7 @@ class StarView: BaseView {
         if isOn {
             startImage.tintColor = .primaryColor
         } else {
-            startImage.tintColor = .lightGray
+            startImage.tintColor = .lightGray.withAlphaComponent(0.2)
         }
     }
 }

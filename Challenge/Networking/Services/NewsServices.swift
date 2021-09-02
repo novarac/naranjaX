@@ -2,29 +2,14 @@ import Foundation
 import Alamofire
 
 protocol NewsServicesProtocol {
-    func fetchNews(searchText: String, indexPage: Int, completion: @escaping (_ news: GetNewsResponse?, _ error: Error?) -> Void)
-    func fetchNewByURL(url: String, completion: @escaping (_ news: GetNewsItemResponse?, _ error: Error?) -> Void)
+    func fetchNews(params: SearchNewFiltersRequest, completion: @escaping (_ news: GetNewsResponse?, _ error: Error?) -> Void)
+    func fetchNewByURL(url: String, params: SearchNewFiltersRequest, completion: @escaping (_ news: GetNewsItemResponse?, _ error: Error?) -> Void)
 }
 
 class NewsServices: NewsServicesProtocol {
-    func fetchNews(searchText: String, indexPage: Int = 0, completion: @escaping (GetNewsResponse?, Error?) -> Void) {
-//        order-by: relevance, newest, oldest, none
+    func fetchNews(params: SearchNewFiltersRequest, completion: @escaping (GetNewsResponse?, Error?) -> Void) {
         
-        let fieldsString = "starRating,headline,thumbnail,short-url"
-        let escapedFieldsString = fieldsString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        
-        let parameters = ["q": searchText,
-                          "startIndex": 1,
-                          "page-size": 10,
-                          "page": indexPage,
-                          "format": "json",
-                          "from-date": "2021-01-01",
-//                          "to-date": "",
-                          "show-tags": "contributor",
-                          "show-fields": escapedFieldsString!,
-                          "order-by": "relevance",
-                          "tag": "film/film,tone/reviews",
-                          "api-key": Constants.apiKey] as [String: Any]
+        let parameters = params.dictionary
         
         let endpoint = Constants.Endpoints.fetchNews
         APICLient().getEntity(endpoint: endpoint, parameters: parameters) { (incidents, error) in
@@ -32,10 +17,11 @@ class NewsServices: NewsServicesProtocol {
         }
     }
     
-    func fetchNewByURL(url: String, completion: @escaping (_ news: GetNewsItemResponse?, _ error: Error?) -> Void) {
-        let urlString =  "\(url)?show-fields=all&api-key=\(Constants.apiKey)"
+    func fetchNewByURL(url: String, params: SearchNewFiltersRequest, completion: @escaping (_ news: GetNewsItemResponse?, _ error: Error?) -> Void) {
+        
+        let parameters = params.dictionary
 
-        APICLient().getEntity(url: urlString) { (incidents, error) in
+        APICLient().getEntity(url: url, parameters: parameters) { (incidents, error) in
             completion(incidents, error)
         }
     }

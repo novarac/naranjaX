@@ -98,7 +98,7 @@ class MainViewController: BaseViewController {
         filterButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(20)
-            make.width.height.equalTo(30)
+            make.width.height.equalTo(25)
         }
         
         mainTableView.snp.makeConstraints { make in
@@ -107,8 +107,7 @@ class MainViewController: BaseViewController {
         }
         
         thereAreNotNewsImage.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.centerX.centerY.equalToSuperview()
             make.width.height.equalTo(60)
         }
         
@@ -128,9 +127,7 @@ class MainViewController: BaseViewController {
     
     override func addConfiguration() {
         let logoTitleView = UIImageView(image: CommonAssets.naranjaXlogoNavBar.image)
-        logoTitleView.contentMode = .scaleAspectFit
         navigationItem.titleView = logoTitleView
-        navigationItem.titleView?.sizeToFit()
         
         mainTableView.delegate = self
         mainTableView.dataSource = self
@@ -139,8 +136,6 @@ class MainViewController: BaseViewController {
         mainTableView.tableFooterView = UIView()
         
         thereAreNotNewsLabel.text = "noNewsToShow".localized
-        thereAreNotNewsLabel.isHidden = true
-        thereAreNotNewsImage.isHidden = true
         
         searchBarView.delegate = self
         searchBarView.placeholder = "seach".localized
@@ -155,9 +150,15 @@ class MainViewController: BaseViewController {
     // MARK: Public Methods
     
     func showScreenApp() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didBecomeActiveNotification),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(willResignActiveNotification), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(willResignActiveNotification),
+                                               name: UIApplication.willResignActiveNotification,
+                                               object: nil)
     }
     
     @objc func didBecomeActiveNotification() {
@@ -196,20 +197,16 @@ class MainViewController: BaseViewController {
         if (((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) && !isLoadingList) {
             if presenter?.getNewItemsCount() ?? 0 > 0 {
                 isLoadingList = true
-                loadMoreItemsForList()
+                presenter?.fetchNewsMoreItems()
             }
         }
-    }
-    
-    func loadMoreItemsForList() {
-        presenter?.fetchNewsMoreItems()
     }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let countItems = presenter?.getNewItemsCount() else { return 0}
+        guard let countItems = presenter?.getNewItemsCount() else { return 0 }
         
         thereAreNotNewsLabel.isHidden = countItems > 0 ? true : false
         thereAreNotNewsImage.isHidden = countItems > 0 ? true : false
@@ -221,11 +218,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? NewCellItem
         cell?.configure(forNew: presenter?.getItemByIndex(item: indexPath.row))
-        if indexPath.row % 2 == 0 {
-            cell?.backgroundColor = .backgroundCells //.withAlphaComponent(0.1)
-        } else {
-            cell?.backgroundColor = .white
-        }
+        cell?.backgroundColor = indexPath.row % 2 == 0 ? .backgroundCells : .white
         return cell ?? UITableViewCell()
     }
     

@@ -10,11 +10,11 @@ class GetNewsResult: Decodable {
     var pages: Int
     
     enum CodingKeys: String, CodingKey {
-        case results = "results"
-        case total = "total"
-        case startIndex = "startIndex"
-        case pageSize = "pageSize"
-        case currentPage = "currentPage"
-        case pages = "pages"
+        case results
+        case total
+        case startIndex
+        case pageSize
+        case currentPage
+        case pages
     }
 }
