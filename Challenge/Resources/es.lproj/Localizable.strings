@@ -8,3 +8,4 @@
 "days" = "d";
 "week" = "sem";
 "noNewsToShow" = "No hay noticias para visualizar";
+"title_detail_news_item" = "Detalle Noticia";

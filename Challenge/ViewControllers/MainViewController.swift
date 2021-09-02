@@ -186,13 +186,18 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let newItem = presenter?.getItemByIndex(item: indexPath.row)
         cell?.configure(forNew: newItem)
         let bgColorView = UIView()
-        bgColorView.backgroundColor = .secondaryColor.withAlphaComponent(0.5)
+        bgColorView.backgroundColor = .primaryColor.withAlphaComponent(0.5)
         cell?.selectedBackgroundView = bgColorView
         return cell ?? UITableViewCell()
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchBarView.resignFirstResponder()
+        let newItem = presenter?.getItemByIndex(item: indexPath.row)
+        let vcDetail = DetailNewViewController()
+        vcDetail.currentNew = newItem
+//        present(vcDetail, animated: true, completion: nil)
+        navigationController?.pushViewController(vcDetail, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
