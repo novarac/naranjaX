@@ -4,7 +4,9 @@ import Kingfisher
 class NewCellItem: UITableViewCell {
 
     private lazy var titleLabel = UILabel(frame: .zero)
+    private lazy var sectionLabel = UILabel(frame: .zero)
     private lazy var dateLabel = UILabel(frame: .zero)
+    private lazy var starRatingView = StarRatingView(frame: .zero)
     private lazy var image = UIImageView(frame: .zero)
     private lazy var separetor = UIView(frame: .zero)
     
@@ -25,14 +27,20 @@ class NewCellItem: UITableViewCell {
         
     func addSubviews() {
         addSubview(titleLabel)
+        addSubview(sectionLabel)
         addSubview(dateLabel)
+        addSubview(starRatingView)
         addSubview(image)
     }
     
     func addStyle() {
         titleLabel.font = .medium(14)
-        titleLabel.numberOfLines = 0
+        titleLabel.numberOfLines = 4
+        titleLabel.minimumScaleFactor = 0.7
         titleLabel.textColor = .black
+        
+        sectionLabel.font = .medium(12)
+        sectionLabel.textColor = .gray
         
         dateLabel.font = .medium(12)
         dateLabel.textColor = .gray
@@ -40,24 +48,34 @@ class NewCellItem: UITableViewCell {
         
         image.contentMode = .scaleAspectFill
         image.backgroundColor = .lightGray.withAlphaComponent(0.2)
-        image.layer.cornerRadius = 10
     }
 
     func addConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
-            make.leading.equalTo(110)
+            make.leading.equalTo(image.snp.trailing).offset(10)
             make.trailing.equalToSuperview().inset(14)
         }
         
         dateLabel.snp.makeConstraints { make in
-            make.bottom.trailing.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(10)
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
         }
         
+        starRatingView.snp.makeConstraints { make in
+            make.top.equalTo(dateLabel.snp.bottom).offset(10)
+            make.leading.equalTo(image.snp.trailing).offset(10)
+            
+        }
+        
+        sectionLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(10)
+            make.leading.equalTo(image.snp.trailing).offset(10)
+        }
+                
         image.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().offset(15)
-            make.bottom.equalToSuperview().inset(15)
-            make.width.equalTo(70)
+            make.top.leading.bottom.equalToSuperview().inset(1)
+            make.width.equalTo(160)
         }
     }
 
@@ -71,6 +89,8 @@ class NewCellItem: UITableViewCell {
         currentNew = new
         
         titleLabel.text = new?.webTitle
+        starRatingView.configure(forQuantityStars: new?.fields?.starRating)
+        sectionLabel.text = new?.sectionName
         
         if let date = new?.webPublicationDate?.getFormattedDate(
             fromFormat: Constants.Date.dateServerFormat,
@@ -84,7 +104,7 @@ class NewCellItem: UITableViewCell {
         }
 
         if let url = URL(string: new?.fields?.thumbnail ?? "") {
-            image.kf.setImage(with: url)
+            image.kf.setImage(with: url, placeholder: CommonAssets.iconGrayApp.image)
             image.clipsToBounds = true
         }
     }

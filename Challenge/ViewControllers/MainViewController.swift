@@ -64,9 +64,8 @@ class MainViewController: BaseViewController {
             }
         }
         
-        mainTableView.backgroundColor = .clear //.lightGray.withAlphaComponent(0.5)
+        mainTableView.backgroundColor = .clear
         mainTableView.separatorStyle = .none
-        mainTableView.separatorColor = .secondaryColor
         
         thereAreNotNewsImage.contentMode = .scaleAspectFit
         thereAreNotNewsImage.image = CommonAssets.noNews.image.withRenderingMode(.alwaysTemplate)
@@ -132,7 +131,7 @@ class MainViewController: BaseViewController {
         mainTableView.delegate = self
         mainTableView.dataSource = self
         mainTableView.register(NewCellItem.self, forCellReuseIdentifier: identifier)
-        mainTableView.rowHeight = 100
+        mainTableView.rowHeight = 150
         mainTableView.tableFooterView = UIView()
         
         thereAreNotNewsLabel.text = "noNewsToShow".localized
