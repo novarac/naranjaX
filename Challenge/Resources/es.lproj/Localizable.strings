@@ -1,3 +1,10 @@
 /* Commons */
 
 "title_home" = "NaranjaX";
+"seach" = "Buscar...";
+"ago" = "Hace";
+"hours" = "hora/s";
+"minutes" = "min/s";
+"days" = "d";
+"week" = "sem";
+"noNewsToShow" = "No hay noticias para visualizar";

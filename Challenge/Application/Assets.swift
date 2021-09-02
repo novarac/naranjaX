@@ -10,6 +10,7 @@ enum CommonAssets: String, AssetsProvider {
     case naranjaXlogoSplash = "NaranjaXlogoSplash"
     case backArrow = "BackArrow"
     case noNews = "NoNews"
+    case filter = "Filter"
     
     var name: String { rawValue }
     var image: UIImage { UIImage(named: rawValue)! }
