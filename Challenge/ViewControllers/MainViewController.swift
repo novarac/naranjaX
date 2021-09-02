@@ -215,7 +215,7 @@ extension MainViewController: MainViewProtocol {
         }
         isLoadingList = false
         mainTableView.reloadData()
-        mainTableView.setContentOffset(.zero, animated: true)
+        mainTableView.setContentOffset(.zero, animated: false)
     }
     
     public func fetchNewsError() {
@@ -228,9 +228,13 @@ extension MainViewController: UISearchBarDelegate {
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let text = searchBar.text, text.isEmpty {
             presenter?.fetchNewsResetSearch(searchText: "")
+            return
+        }
+        if searchBar.text?.count ?? 0 > 3 {
+            presenter?.fetchNewsResetSearch(searchText: searchText)
         }
     }
-
+    
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         presenter?.fetchNews(searchText: searchBar.text ?? "")
         searchBar.resignFirstResponder()
