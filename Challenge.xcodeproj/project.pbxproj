@@ -33,6 +33,9 @@
 		C9A2311B26E0114800A6B58F /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A2311926E0114800A6B58F /* String+Date.swift */; };
 		C9A2311D26E0115A00A6B58F /* NewCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A2311C26E0115A00A6B58F /* NewCellItem.swift */; };
 		C9A2312026E0116F00A6B58F /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A2311F26E0116F00A6B58F /* MainPresenter.swift */; };
+		C9C9DD4926E05EEB00F563E4 /* NewDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9DD4826E05EEB00F563E4 /* NewDetailPresenter.swift */; };
+		C9C9DD4B26E05F0F00F563E4 /* DetailNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9DD4A26E05F0F00F563E4 /* DetailNewViewController.swift */; };
+		C9C9DD4D26E05F7900F563E4 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C9DD4C26E05F7900F563E4 /* String+HTML.swift */; };
 		C9EAADFD26DD564000A28468 /* ChallengeTestsEndToEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EAADFC26DD564000A28468 /* ChallengeTestsEndToEnd.swift */; };
 		C9EAAE0B26DD571300A28468 /* ChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EAAE0A26DD571300A28468 /* ChallengeTests.swift */; };
 		C9F0CE5426DC238700F85118 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9F0CE5326DC238700F85118 /* Assets.xcassets */; };
@@ -108,6 +111,9 @@
 		C9A2311926E0114800A6B58F /* String+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
 		C9A2311C26E0115A00A6B58F /* NewCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCellItem.swift; sourceTree = "<group>"; };
 		C9A2311F26E0116F00A6B58F /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		C9C9DD4826E05EEB00F563E4 /* NewDetailPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDetailPresenter.swift; sourceTree = "<group>"; };
+		C9C9DD4A26E05F0F00F563E4 /* DetailNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailNewViewController.swift; sourceTree = "<group>"; };
+		C9C9DD4C26E05F7900F563E4 /* String+HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HTML.swift"; sourceTree = "<group>"; };
 		C9EAADFA26DD564000A28468 /* ChallengeTestsEndToEnd.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChallengeTestsEndToEnd.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9EAADFC26DD564000A28468 /* ChallengeTestsEndToEnd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeTestsEndToEnd.swift; sourceTree = "<group>"; };
 		C9EAADFE26DD564000A28468 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -213,6 +219,7 @@
 			children = (
 				C9A2311826E0114800A6B58F /* Date+TimeAgo.swift */,
 				C9A2311926E0114800A6B58F /* String+Date.swift */,
+				C9C9DD4C26E05F7900F563E4 /* String+HTML.swift */,
 				C9024D6C26DC7854004B39E6 /* String+localize.swift */,
 				C9A230DA26DEEDBF00A6B58F /* UIView+SnapKit.swift */,
 			);
@@ -274,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				C9A2311F26E0116F00A6B58F /* MainPresenter.swift */,
+				C9C9DD4826E05EEB00F563E4 /* NewDetailPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -368,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				C9A230F726E00D8700A6B58F /* BaseViewController.swift */,
+				C9C9DD4A26E05F0F00F563E4 /* DetailNewViewController.swift */,
 				C9024D3B26DC3254004B39E6 /* MainViewController.swift */,
 				C9024D5F26DC4D33004B39E6 /* NavigationViewController.swift */,
 			);
@@ -669,7 +678,9 @@
 				C9A2311626E0110000A6B58F /* APIErrorHandler.swift in Sources */,
 				C9A2311B26E0114800A6B58F /* String+Date.swift in Sources */,
 				C9A2310126E010CC00A6B58F /* NewsModel.swift in Sources */,
+				C9C9DD4B26E05F0F00F563E4 /* DetailNewViewController.swift in Sources */,
 				C9024D4026DC37B0004B39E6 /* AppDelegate.swift in Sources */,
+				C9C9DD4926E05EEB00F563E4 /* NewDetailPresenter.swift in Sources */,
 				C9A230DB26DEEDC000A6B58F /* UIView+SnapKit.swift in Sources */,
 				C9A230F826E00D8700A6B58F /* BaseViewController.swift in Sources */,
 				C9A2311A26E0114800A6B58F /* Date+TimeAgo.swift in Sources */,
@@ -691,6 +702,7 @@
 				C9A2311526E0110000A6B58F /* APIEnvironment.swift in Sources */,
 				C9024D3E26DC33B4004B39E6 /* SceneDelegate.swift in Sources */,
 				C9A2310326E010CC00A6B58F /* GetNewsFields.swift in Sources */,
+				C9C9DD4D26E05F7900F563E4 /* String+HTML.swift in Sources */,
 				C9A2311726E0110000A6B58F /* NewsServices.swift in Sources */,
 				C9024D4726DC3A3E004B39E6 /* Constants.swift in Sources */,
 			);

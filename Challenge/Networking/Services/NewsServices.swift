@@ -3,6 +3,7 @@ import Alamofire
 
 protocol NewsServicesProtocol {
     func fetchNews(searchText: String, indexPage: Int, completion: @escaping (_ news: GetNewsResponse?, _ error: Error?) -> Void)
+    func fetchNewByURL(url: String, completion: @escaping (_ news: GetNewsItemResponse?, _ error: Error?) -> Void)
 }
 
 class NewsServices: NewsServicesProtocol {
@@ -23,6 +24,14 @@ class NewsServices: NewsServicesProtocol {
 
         let endpoint = Constants.Endpoints.fetchNews
         APICLient().getEntity(endpoint: endpoint, parameters: parameters) { (incidents, error) in
+            completion(incidents, error)
+        }
+    }
+    
+    func fetchNewByURL(url: String, completion: @escaping (_ news: GetNewsItemResponse?, _ error: Error?) -> Void) {
+        let urlString =  "\(url)?show-fields=all&api-key=\(Constants.apiKey)"
+
+        APICLient().getEntity(url: urlString) { (incidents, error) in
             completion(incidents, error)
         }
     }
