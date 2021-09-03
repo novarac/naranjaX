@@ -47,23 +47,15 @@ class MainViewController: BaseViewController {
     override func addStyle() {
         view.backgroundColor = .backgroundSections
 
-        headerView.backgroundColor = .white
-        
-        searchBarView.tintColor = .white
-        searchBarView.barTintColor = .white
+        headerView.backgroundColor = .backgroundCells
+        searchBarView.barTintColor = .backgroundCells
+        if let textfield = searchBarView.value(forKey: "searchField") as? UITextField {
+            textfield.textColor = .fontSeachBarTextField
+            textfield.backgroundColor = .backgroundSeachBarTextField
+        }
         
         filterButton.setImage(CommonAssets.filter.image.withRenderingMode(.alwaysTemplate), for: .normal)
-        filterButton.tintColor = .lightGray
-                
-        if let textfield = searchBarView.value(forKey: "searchField") as? UITextField {
-            textfield.textColor = .black
-            textfield.backgroundColor = .primaryColor.withAlphaComponent(0.5)
-            if let backgroundview = textfield.subviews.first {
-                backgroundview.backgroundColor = .white
-                backgroundview.layer.cornerRadius = 10
-                backgroundview.clipsToBounds = true
-            }
-        }
+        filterButton.tintColor = .fontSeachBarTextField
         
         mainTableView.backgroundColor = .clear
         mainTableView.separatorStyle = .none
@@ -138,7 +130,7 @@ class MainViewController: BaseViewController {
         thereAreNotNewsLabel.text = "noNewsToShow".localized
         
         searchBarView.delegate = self
-        searchBarView.placeholder = "seach".localized
+        searchBarView.placeholder = "placeholderSeach".localized
         
         filterButton.addTarget(self, action: #selector(pressButtonFilter), for: .touchUpInside)
         
