@@ -44,7 +44,7 @@ public class MainPresenter: MainPresenterProtocol {
                                                        fromDate: "2021-01-01",
                                                        showTags: "contributor",
                                                        showFields: escapedFieldsString,
-                                                       orderBy: "relevance", //relevance, newest, oldest, none
+                                                       orderBy: "relevance",
                                                        tag: "film/film,tone/reviews")
         
         service?.fetchNews(params: searchNewFiltersParams) { [weak self] (news, error) in
@@ -93,7 +93,6 @@ public class MainPresenter: MainPresenterProtocol {
     public func showFilterView(viewC: UIViewController) {
         let vcFilter = FilterViewController()
         viewC.present(vcFilter, animated: true, completion: nil)
-//        viewC.navigationController?.pushViewController(vcFilter, animated: true)
     }
     
     public func showDetailNewView(viewC: UIViewController, row: Int) {
