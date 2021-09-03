@@ -7,6 +7,8 @@ class DetailNewViewController: BaseViewController {
     private lazy var indicatorView = UIActivityIndicatorView(frame: .zero)
     private lazy var mainScrollView = UIScrollView(frame: .zero)
     private lazy var mainStackView = UIStackView(frame: .zero)
+    private lazy var maskView = UIView(frame: .zero)
+    private lazy var contentFieldsStackView = UIStackView(frame: .zero)
     private lazy var titleLabel = UILabel(frame: .zero)
     private lazy var dateLabel = UILabel(frame: .zero)
     private lazy var headerLabel = UILabel(frame: .zero)
@@ -23,39 +25,45 @@ class DetailNewViewController: BaseViewController {
     
     override func addSubviews() {
         view.addSubview(mainScrollView)
+        view.addSubview(image)
         mainScrollView.addSubview(mainStackView)
-        mainStackView.addArrangedSubview(image)
-        mainStackView.addArrangedSubview(titleLabel)
-        mainStackView.addArrangedSubview(dateLabel)
-        mainStackView.addArrangedSubview(headerLabel)
-        mainStackView.addArrangedSubview(bodyLabel)
+        mainStackView.addArrangedSubview(maskView)
+        mainStackView.addArrangedSubview(contentFieldsStackView)
+        contentFieldsStackView.addArrangedSubview(titleLabel)
+        contentFieldsStackView.addArrangedSubview(dateLabel)
+        contentFieldsStackView.addArrangedSubview(headerLabel)
+        contentFieldsStackView.addArrangedSubview(bodyLabel)
         view.addSubview(loadingView)
         loadingView.addSubview(indicatorView)
     }
     
     override func addStyle() {
         view.backgroundColor = .white
-        mainScrollView.backgroundColor = .lightGray.withAlphaComponent(0.5)
-        mainStackView.backgroundColor = .white
-        
+
         image.contentMode = . scaleAspectFill
         image.backgroundColor = .white
+        
+        contentFieldsStackView.backgroundColor = .white
         
         titleLabel.font = .medium(18)
         titleLabel.numberOfLines = 0
         titleLabel.textColor = .black
+        titleLabel.backgroundColor = .white
         
         dateLabel.font = .regular(14)
         dateLabel.textColor = .lightGray
         dateLabel.textAlignment = .right
+        dateLabel.backgroundColor = .white
         
         headerLabel.font = .medium(18)
         headerLabel.numberOfLines = 0
         headerLabel.textColor = .black
+        headerLabel.backgroundColor = .white
         
         bodyLabel.font = .regular(14)
         bodyLabel.numberOfLines = 0
         bodyLabel.textColor = .black
+        bodyLabel.backgroundColor = .white
         
         loadingView.backgroundColor = .black.withAlphaComponent(0.2)
         
@@ -76,8 +84,21 @@ class DetailNewViewController: BaseViewController {
         }
         
         image.snp.makeConstraints { make in
+            make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(300)
+        }
+        
+        maskView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(300)
+        }
+        
+        contentFieldsStackView.snp.makeConstraints { (make) in
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(10)
+            make.leading.trailing.equalTo(view)
+            make.width.equalTo(mainScrollView)
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -111,6 +132,9 @@ class DetailNewViewController: BaseViewController {
         mainStackView.axis = .vertical
         mainStackView.spacing = 10
         mainStackView.isHidden = true
+        
+        contentFieldsStackView.axis = .vertical
+        contentFieldsStackView.spacing = 10
     }
 }
 
@@ -139,6 +163,7 @@ extension DetailNewViewController: NewDetailProtocol {
 
         if let url = URL(string: newsItem.fields?.thumbnail ?? "") {
             image.kf.setImage(with: url, placeholder: CommonAssets.iconGrayApp.image)
+            view.sendSubviewToBack(image)
             image.clipsToBounds = true
         }
         mainStackView.isHidden = false
