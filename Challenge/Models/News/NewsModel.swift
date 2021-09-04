@@ -16,8 +16,12 @@ public class NewsModel: NSObject, Decodable {
         case fields
     }
     
-    override required convenience init() {
-        self.init()
+    init(webPublicationDate: String?, webTitle: String?, apiUrl: String?, sectionName: String?, fields: NewsFieldsModel?) {
+        self.webPublicationDate = webPublicationDate
+        self.webTitle = webTitle
+        self.apiUrl = apiUrl
+        self.sectionName = sectionName
+        self.fields = fields
     }
     
     func description() -> String {

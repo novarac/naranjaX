@@ -30,7 +30,7 @@ class StarRatingView: BaseView {
     
     func configure(forQuantityStars quantityStars: String) {
         contentImages.removeAllArrangedSubviews()
-        for starIndex in 0...5 {
+        for starIndex in 0...4 {
             let star = StarView(frame: .zero)
             contentImages.addArrangedSubview(star)
             if starIndex > Int(quantityStars) ?? 0 {

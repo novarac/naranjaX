@@ -31,9 +31,7 @@ class NewDetailPresenter {
             }
 
             weakSelf.newDetailView?.hideLoader()
-
-            if let error = error {
-                print(error)
+            if let _ = error {
                 weakSelf.newDetailView?.fetchNewItemError()
             } else {
                 guard let newsResult = news?.response?.content else {

@@ -4,6 +4,7 @@ class DetailNewViewController: BaseViewController {
     
     public var presenter: NewDetailPresenter?
     private lazy var loadingView = UIView(frame: .zero)
+    private lazy var closeButton = UIButton(frame: .zero)
     private lazy var indicatorView = UIActivityIndicatorView(frame: .zero)
     private lazy var mainScrollView = UIScrollView(frame: .zero)
     private lazy var mainStackView = UIStackView(frame: .zero)
@@ -26,6 +27,7 @@ class DetailNewViewController: BaseViewController {
     override func addSubviews() {
         view.addSubview(mainScrollView)
         view.addSubview(image)
+        view.addSubview(closeButton)
         mainScrollView.addSubview(mainStackView)
         mainStackView.addArrangedSubview(maskView)
         mainStackView.addArrangedSubview(contentFieldsStackView)
@@ -44,6 +46,12 @@ class DetailNewViewController: BaseViewController {
         image.backgroundColor = .white
         
         contentFieldsStackView.backgroundColor = .white
+        
+        closeButton.setImage(CommonAssets.close.image.withRenderingMode(.alwaysTemplate), for: .normal)
+        closeButton.contentMode = .scaleAspectFit
+        closeButton.tintColor = .primaryColor
+        closeButton.backgroundColor = .lightGray
+        closeButton.layer.cornerRadius = 15
         
         titleLabel.font = .medium(18)
         titleLabel.numberOfLines = 0
@@ -87,6 +95,12 @@ class DetailNewViewController: BaseViewController {
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(300)
+        }
+        
+        closeButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20)
+            make.top.equalToSuperview().offset(25)
+            make.width.height.equalTo(30)
         }
         
         maskView.snp.makeConstraints { make in
@@ -135,6 +149,14 @@ class DetailNewViewController: BaseViewController {
         
         contentFieldsStackView.axis = .vertical
         contentFieldsStackView.spacing = 10
+        
+        closeButton.addTarget(self, action: #selector(pressCloseButton), for: .touchUpInside)
+        
+        closeButton.isHidden = ManagerFilters().loadFilters()?.viewDetails != TypeFilterDetailView.present.index ? true : false
+    }
+    
+    @objc func pressCloseButton() {
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -170,7 +192,14 @@ extension DetailNewViewController: NewDetailProtocol {
     }
     
     func fetchNewItemError() {
-        mainStackView.isHidden = true
+        let alert = UIAlertController(title: "Error!", message: "Ups!, algo salió mal", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Intentá otra vez", style: .default, handler: { _ in
+            print("default")
+            self.dismiss(animated: true) {
+                
+            }
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     func showLoader() {

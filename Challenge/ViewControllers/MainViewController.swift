@@ -2,7 +2,7 @@ import UIKit
 
 public protocol MainViewProtocol: AnyObject {
     func fetchNewsSuccess(news: [NewsModel])
-    func fetchNewsError()
+    func fetchNewsError(messageError: String)
     func hideLoader()
     func showLoader()
 }
@@ -20,6 +20,9 @@ class MainViewController: BaseViewController {
     private lazy var thereAreNotNewsImage = UIImageView(frame: .zero)
     private lazy var splashScreenView = SplashScreenView(frame: .zero)
     private var refreshControl: UIRefreshControl?
+    private var toastMessageView: ToastMessageView!
+    private var timerToast: Timer!
+    
     var isLoadingList = false
     
     private var identifier = "Cell"
@@ -37,9 +40,9 @@ class MainViewController: BaseViewController {
         view.addSubview(headerView)
         headerView.addSubview(searchBarView)
         headerView.addSubview(filterButton)
-        view.addSubview(mainTableView)
         view.addSubview(thereAreNotNewsLabel)
         view.addSubview(thereAreNotNewsImage)
+        view.addSubview(mainTableView)
         view.addSubview(loadingView)
         loadingView.addSubview(indicatorView)
     }
@@ -57,7 +60,7 @@ class MainViewController: BaseViewController {
         filterButton.setImage(CommonAssets.filter.image.withRenderingMode(.alwaysTemplate), for: .normal)
         filterButton.tintColor = .fontSeachBarTextField
         
-        mainTableView.backgroundColor = .white
+        mainTableView.backgroundColor = .clear
         mainTableView.separatorStyle = .none
         
         thereAreNotNewsImage.contentMode = .scaleAspectFit
@@ -139,6 +142,8 @@ class MainViewController: BaseViewController {
         showScreenApp()
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshSearch), name: Notification.Name("refreshSearch"), object: nil)
+        
+        configureToastMessageView()
     }
     
     // MARK: Public Methods
@@ -186,7 +191,7 @@ class MainViewController: BaseViewController {
     }
     
     @objc func refreshPullToDown() {
-        presenter?.fetchNewsResetSearch(searchText: searchBarView.text ?? "")
+        presenter?.fetchNewsResetSearch(query: searchBarView.text ?? "")
     }
     
     // MARK: UITableView scrolldown to view more items
@@ -197,6 +202,46 @@ class MainViewController: BaseViewController {
                 isLoadingList = true
                 presenter?.fetchNewsMoreItems()
             }
+        }
+    }
+    
+    // MARK: Toast message
+    func configureToastMessageView() {
+        toastMessageView = ToastMessageView(frame: .zero)
+        if let topController = getTopMostViewController() {
+            topController.view.addSubview(toastMessageView)
+            
+            toastMessageView.snp.makeConstraints({ make in
+                make.bottom.equalToSuperview()
+                make.height.equalTo(60)
+                make.leading.trailing.equalToSuperview()
+            })
+            
+            toastMessageView.alpha = 0
+            
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(showToastMessage),
+                                                   name: Notification.Name("showToastMessage"),
+                                                   object: nil)
+        }
+    }
+    
+    @objc func showToastMessage(notif: Notification) {
+        if let topController = getTopMostViewController() {
+            topController.view.bringSubviewToFront(toastMessageView)
+            toastMessageView.showMessage(message: notif.object as? String ?? "")
+            
+            UIView.animate(withDuration: 0.2) {
+                self.toastMessageView.alpha = 1
+            }
+            timerToast = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(timerToastFinish), userInfo: nil, repeats: false)
+        }
+    }
+    
+    @objc func timerToastFinish() {
+        timerToast.invalidate()
+        UIView.animate(withDuration: 0.2) {
+            self.toastMessageView.alpha = 0
         }
     }
 }
@@ -210,9 +255,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let countItems = presenter?.getSectionItems(section: section).count ?? 0
         
-        // TODO: numberOfRowsInSection without sections
-//        guard let countItems = presenter?.getNewItemsCount() else { return 0 }
-        
         thereAreNotNewsLabel.isHidden = countItems > 0 ? true : false
         thereAreNotNewsImage.isHidden = countItems > 0 ? true : false
         mainTableView.isHidden = countItems > 0 ? false : true
@@ -224,21 +266,34 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? NewCellItem
         let sectionItems = presenter?.getSectionItems(section: indexPath.section)
         cell?.configure(forNew: sectionItems?[indexPath.row])
-        
-        // TODO: cell without sections
-//        cell?.configure(forNew: presenter?.getItemByIndex(item: indexPath.row))
-        
         cell?.backgroundColor = indexPath.row % 2 == 0 ? .backgroundCells : .white
         return cell ?? UITableViewCell()
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchBarView.resignFirstResponder()
-        presenter?.showDetailNewView(viewC: self, row: indexPath.row)
+        let sectionItems = presenter?.getSectionItems(section: indexPath.section)
+        if let newModel = sectionItems?[indexPath.row] {
+            presenter?.showDetailNewView(viewC: self, new: newModel)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let filtersSaved = ManagerFilters().loadFilters()
+        if filtersSaved?.orderBy == 0 {
+            return 0.0
+        }
+        return 30.0
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+//        let filtersSaved = ManagerFilters().loadFilters()
+//        if filtersSaved?.orderBy == 0 {
+//            return UIView(frame: .zero)
+//        }
+        
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
         
         let bgView = UIView(frame: .zero)
@@ -287,8 +342,12 @@ extension MainViewController: MainViewProtocol {
         mainTableView.setContentOffset(.zero, animated: false)
     }
     
-    public func fetchNewsError() {
-        print("fetchNewsError")
+    public func fetchNewsError(messageError: String) {
+        let alert = UIAlertController(title: "Error!", message: "Ups!, algo salió mal", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Intentá otra vez", style: .default, handler: { _ in
+            print("default")
+        }))
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -296,7 +355,8 @@ extension MainViewController: UISearchBarDelegate {
     
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let text = searchBar.text, text.isEmpty {
-            presenter?.fetchNewsResetSearch(searchText: "")
+            
+            presenter?.fetchNewsResetSearch(query: "")
             return
         }
         
@@ -306,7 +366,7 @@ extension MainViewController: UISearchBarDelegate {
             return
         }
         if searchBar.text?.count ?? 0 >= filtersQuantityCharactersAutoSearch {
-            presenter?.fetchNewsResetSearch(searchText: searchText)
+            presenter?.fetchNewsResetSearch(query: searchText)
         }
     }
     
@@ -322,7 +382,7 @@ extension MainViewController: UISearchBarDelegate {
     }
     
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        presenter?.fetchNews(searchText: searchBar.text ?? "")
+        presenter?.fetchNews(query: searchBar.text ?? "")
         searchBar.resignFirstResponder()
     }
 }
