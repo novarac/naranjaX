@@ -137,9 +137,15 @@ class MainViewController: BaseViewController {
         setRefreshControl()
         
         showScreenApp()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshSearch), name: Notification.Name("refreshSearch"), object: nil)
     }
     
     // MARK: Public Methods
+    
+    @objc func refreshSearch() {
+        refreshPullToDown()
+    }
     
     func showScreenApp() {
         NotificationCenter.default.addObserver(self,
@@ -175,11 +181,11 @@ class MainViewController: BaseViewController {
         refreshControl!.tintColor = .primaryColor
         let attributesFontColor = [NSAttributedString.Key.foregroundColor: UIColor.primaryColor]
         refreshControl!.attributedTitle = NSAttributedString(string: "↓ Actualizar ↓", attributes: attributesFontColor)
-        refreshControl!.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        refreshControl!.addTarget(self, action: #selector(refreshPullToDown), for: .valueChanged)
         mainTableView.addSubview(refreshControl!)
     }
     
-    @objc func refresh() {
+    @objc func refreshPullToDown() {
         presenter?.fetchNewsResetSearch(searchText: searchBarView.text ?? "")
     }
     

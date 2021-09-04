@@ -218,7 +218,7 @@ class FilterViewController: BaseViewController {
         closeButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(20)
             make.top.equalToSuperview().offset(25)
-            make.width.height.equalTo(15)
+            make.width.height.equalTo(30)
         }
         
         orderByLabel.snp.makeConstraints { make in
@@ -326,12 +326,6 @@ class FilterViewController: BaseViewController {
         orderBySegmentControl.insertSegment(withTitle: TypeFilterOrderBy.oldest.rawValue.localized,
                                             at: 2,
                                             animated: true)
-        orderBySegmentControl.insertSegment(withTitle: TypeFilterOrderBy.none.rawValue.localized,
-                                            at: 3,
-                                            animated: true)
-//        orderBySegmentControl.addTarget(self,
-//                                        action: #selector(orderBySegmentControlChange),
-//                                        for: .valueChanged)
         orderBySegmentControl.selectedSegmentIndex = 1
         
 //        dateTitleStackView.axis = .horizontal
@@ -364,9 +358,6 @@ class FilterViewController: BaseViewController {
         typeViewDetailSegmentControl.insertSegment(withTitle: TypeFilterDetailView.push.rawValue.localized,
                                                    at: 1,
                                                    animated: true)
-//        typeViewDetailSegmentControl.addTarget(self,
-//                                        action: #selector(typeViewDetailSegmentControlChange),
-//                                        for: .valueChanged)
         typeViewDetailSegmentControl.selectedSegmentIndex = 1
         
         quantityItemsByPageLabel.text = "title_filter_quantity_items_by_page".localized
@@ -382,9 +373,6 @@ class FilterViewController: BaseViewController {
         quantityItemsByPageSegmentControl.insertSegment(withTitle: TypeFilterQuantityItemsByPage.fifty.rawValue.localized,
                                                         at: 3,
                                                         animated: true)
-//        quantityItemsByPageSegmentControl.addTarget(self,
-//                                        action: #selector(quantityItemsByPageSegmentControlChange),
-//                                        for: .valueChanged)
         quantityItemsByPageSegmentControl.selectedSegmentIndex = 1
         
         quantityCharactersAutoSearchLabel.text = "title_filter_quantity_characters_autosearch".localized
@@ -491,24 +479,13 @@ class FilterViewController: BaseViewController {
         dismiss(animated: true, completion: nil)
     }
     
-//    @objc func orderBySegmentControlChange() {
-////        print(orderBySegmentControl.selectedSegmentIndex)
-//    }
-    
-//    @objc func typeViewDetailSegmentControlChange() {
-////        print(typeViewDetailSegmentControl.selectedSegmentIndex)
-//    }
-    
-//    @objc func quantityItemsByPageSegmentControlChange() {
-////        print(quantityItemsByPageSegmentControl.selectedSegmentIndex)
-//    }
-    
     @objc func quantityCharactersAutoSearchSliderChangeValue() {
         quantityCharactersAutoSearchCurrentLabel.text = "\(Int(quantityCharactersAutoSearchSlider.value))"
     }
     
     @objc func pressSaveButton() {
         saveFilters()
+        NotificationCenter.default.post(name: Notification.Name("refreshSearch"), object: nil)
         dismiss(animated: true, completion: nil)
     }
     
