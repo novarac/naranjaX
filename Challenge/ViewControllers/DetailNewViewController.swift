@@ -192,9 +192,8 @@ extension DetailNewViewController: NewDetailProtocol {
     }
     
     func fetchNewItemError() {
-        let alert = UIAlertController(title: "Error!", message: "Ups!, algo salió mal", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Intentá otra vez", style: .default, handler: { _ in
-            print("default")
+        let alert = UIAlertController(title: "title_error".localized, message: "message_error".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "try_again_button".localized, style: .default, handler: { _ in
             self.dismiss(animated: true) {
                 
             }
