@@ -416,20 +416,11 @@ class FilterViewController: BaseViewController {
     }
     
     func resetFilters() {
-        for index in 0...TypeFilterOrderBy.allValues.count - 1
-        where Constants.FiltersDefault.orderBy == TypeFilterOrderBy.allValues[index] {
-                orderBySegmentControl.selectedSegmentIndex = index
-        }
+        orderBySegmentControl.selectedSegmentIndex = Constants.FiltersDefault.orderBy.index
         dateFromTextField.text = Constants.FiltersDefault.dateFrom
         dateToTextField.text = Constants.FiltersDefault.dateTo
-        for index in 0...TypeFilterDetailView.allValues.count - 1
-        where Constants.FiltersDefault.viewDetails == TypeFilterDetailView.allValues[index] {
-                typeViewDetailSegmentControl.selectedSegmentIndex = index
-        }
-        for index in 0...TypeFilterQuantityItemsByPage.allValues.count - 1
-        where Constants.FiltersDefault.quantityItemsByPage == TypeFilterQuantityItemsByPage.allValues[index] {
-            quantityItemsByPageSegmentControl.selectedSegmentIndex = index
-        }
+        typeViewDetailSegmentControl.selectedSegmentIndex = Constants.FiltersDefault.viewDetails.index
+        quantityItemsByPageSegmentControl.selectedSegmentIndex = Constants.FiltersDefault.quantityItemsByPage.index
         quantityCharactersAutoSearchCurrentLabel.text = "\(Constants.FiltersDefault.quantityCharactersAutoSearch)"
         quantityCharactersAutoSearchSlider.value = Float(Constants.FiltersDefault.quantityCharactersAutoSearch)
         quantityCharactersAutoSearchMinLabel.text = "\(Constants.FiltersDefault.quantityCharactersAutoSearchMin)"

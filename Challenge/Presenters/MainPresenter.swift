@@ -13,11 +13,6 @@ public protocol MainPresenterProtocol: AnyObject {
     func getSectionItem(index: Int) -> String
 }
 
-struct TableItem {
-    let title: String
-    let creationDate: NSDate
-}
-
 public class MainPresenter: MainPresenterProtocol {
 
     public weak var view: MainViewProtocol?
@@ -25,8 +20,6 @@ public class MainPresenter: MainPresenterProtocol {
     public var news: [NewsModel] = []
     private var currentPage: Int = 1
     var currSearchText: String = ""
-    private var filteredNews: [NewsModel] = []
-    
     var sections: [String] = []
     var sortedSections: [String] = []
     var sectionItems: [NewsModel] = []
@@ -140,7 +133,7 @@ public class MainPresenter: MainPresenterProtocol {
         vcDetail.currentNew = new
         let filters = ManagerFilters().loadFilters()
         if let filterViewDetail = filters?.viewDetails {
-            if TypeFilterDetailView.present == TypeFilterDetailView.allValues[filterViewDetail] {
+            if TypeFilterDetailView.present.index == filterViewDetail {
                 viewC.present(vcDetail, animated: true, completion: nil)
             } else {
                 viewC.navigationController?.pushViewController(vcDetail, animated: true)
@@ -154,8 +147,7 @@ public class MainPresenter: MainPresenterProtocol {
         sections = [String]()
         sortedSections = [String]()
         let filtersSaved = ManagerFilters().loadFilters()
-        // TODO: usar enum para entender el 0 == relevante
-        if filtersSaved?.orderBy == 0 {
+        if filtersSaved?.orderBy == TypeFilterOrderBy.relevance.index {
             sortedSections = [""]
             completion()
             return
@@ -167,8 +159,7 @@ public class MainPresenter: MainPresenterProtocol {
                 sections.append(sorteByString)
             }
         }
-        // TODO: usar enum para entender el 1 == reciente
-        if filtersSaved?.orderBy == 1 {
+        if filtersSaved?.orderBy == TypeFilterOrderBy.newest.index {
             sortedSections = sections.sorted(by: >)
         } else {
             sortedSections = sections.sorted(by: <)

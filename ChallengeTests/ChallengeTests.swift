@@ -51,7 +51,16 @@ class ChallengeTests: XCTestCase {
         
         presenter.fetchNews()
         
-        XCTAssertTrue(presenter.getNewItemsCount() == 1)
-        XCTAssertEqual(presenter.getNewItemsCount(), 1)
+        XCTAssertTrue(presenter.getNewItemsCount() == 2)
+        XCTAssertEqual(presenter.getNewItemsCount(), 2)
+    }
+    
+    func test_formattingDateFromServer() {
+        let dateFromServer = "2021-06-01T17:49:21Z"
+        
+        let dateFormatted = dateFromServer.getFormattedDate(fromFormat: Constants.Date.dateServerFormat,
+                                                            toNewFormat: Constants.Date.newsFormat)
+        
+        XCTAssertEqual(dateFormatted, "2021-06-01", "Invalid formatted output")
     }
 }
