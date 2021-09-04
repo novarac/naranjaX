@@ -19,15 +19,15 @@ struct Constants {
     
     struct Date {
         static let dateServerFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        static let newsFormat = "dd/MM/yyyy"
+        static let newsFormat = "yyyy-MM-dd"
         static let onlyDate = "dd/MM/yyyy"
         static let pickerDate = "yyyy-MM-dd HH:mm:ss +0000"
     }
     
     struct FiltersDefault {
         static let orderBy = TypeFilterOrderBy.relevance
-        static let dateFrom = "01-01-2021"
-        static let dateTo = "01-02-2021"
+        static let dateFrom = "2021-01-01"
+        static let dateTo = "2021-09-01"
         static let viewDetails = TypeFilterDetailView.push
         static let quantityItemsByPage = TypeFilterQuantityItemsByPage.twenty
         static let quantityCharactersAutoSearch = 3

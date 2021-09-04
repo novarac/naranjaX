@@ -57,10 +57,11 @@ public class MainPresenter: MainPresenterProtocol {
                                                        pageSize: filterQuantityItemsByPage,
                                                        page: currentPage,
                                                        format: "json",
-                                                       fromDate: "2021-01-01",
+                                                       fromDate: filters?.dateFrom,
+                                                       toDate: filters?.dateTo,
                                                        showTags: "contributor",
                                                        showFields: escapedFieldsString,
-                                                       orderBy: "\(filterOrderBy)", //"relevance",
+                                                       orderBy: "\(filterOrderBy)",
                                                        tag: "film/film,tone/reviews")
         
         service?.fetchNews(params: searchNewFiltersParams) { [weak self] (news, error) in
