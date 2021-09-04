@@ -57,7 +57,7 @@ class MainViewController: BaseViewController {
         filterButton.setImage(CommonAssets.filter.image.withRenderingMode(.alwaysTemplate), for: .normal)
         filterButton.tintColor = .fontSeachBarTextField
         
-        mainTableView.backgroundColor = .clear
+        mainTableView.backgroundColor = .white
         mainTableView.separatorStyle = .none
         
         thereAreNotNewsImage.contentMode = .scaleAspectFit
@@ -210,6 +210,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let countItems = presenter?.getSectionItems(section: section).count ?? 0
         
+        // TODO: numberOfRowsInSection without sections
 //        guard let countItems = presenter?.getNewItemsCount() else { return 0 }
         
         thereAreNotNewsLabel.isHidden = countItems > 0 ? true : false
@@ -223,8 +224,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? NewCellItem
         let sectionItems = presenter?.getSectionItems(section: indexPath.section)
         cell?.configure(forNew: sectionItems?[indexPath.row])
-        // TODO: cell without section
+        
+        // TODO: cell without sections
 //        cell?.configure(forNew: presenter?.getItemByIndex(item: indexPath.row))
+        
         cell?.backgroundColor = indexPath.row % 2 == 0 ? .backgroundCells : .white
         return cell ?? UITableViewCell()
     }
@@ -239,19 +242,22 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
         
         let bgView = UIView(frame: .zero)
-        bgView.backgroundColor = .primaryColor.withAlphaComponent(0.5)
         headerView.addSubview(bgView)
+        bgView.backgroundColor = .primaryColor.withAlphaComponent(0.75)
+        bgView.layer.cornerRadius = 15
         bgView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(160)
         }
         
         let titleLabel = UILabel(frame: .zero)
-        headerView.addSubview(titleLabel)
+        bgView.addSubview(titleLabel)
         titleLabel.font = .medium(18)
         titleLabel.textAlignment = .center
         titleLabel.textColor = .white
         titleLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
         }
         titleLabel.text = presenter?.getSectionItem(index: section)
