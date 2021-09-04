@@ -1,22 +1,28 @@
 import Foundation
 
-enum TypeFilterOrderBy: String {
+enum TypeFilterOrderBy: String, CaseIterable {
+    case relevance = "filterOrderByRelevance"
     case newest = "filterOrderByNewest"
     case oldest = "filterOrderByOldest"
-    case relevance = "filterOrderByRelevance"
     case none = "filterOrderByNone"
+    
+    static let allValues = [relevance, newest, oldest, none]
 }
 
-enum TypeFilterDetailView: String {
+enum TypeFilterDetailView: String, CaseIterable {
     case present = "filterDetailViewPresent"
     case push = "filterDetailViewPush"
+    
+    static let allValues = [present, push]
 }
 
-enum TypeFilterQuantityItemsByPage: String {
+enum TypeFilterQuantityItemsByPage: String, CaseIterable {
+    case five = "filterQuantityItemsByPageFive"
     case ten = "filterQuantityItemsByPageTen"
     case twenty = "filterQuantityItemsByPageTwenty"
     case fifty = "filterQuantityItemsByPageFifty"
     
+    static let allValues = [five, ten, twenty, fifty]
 }
 
 protocol FilterProtocol: AnyObject {

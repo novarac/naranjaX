@@ -19,6 +19,9 @@
 		C976F4FC26E10EBA00E25531 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976F4FB26E10EBA00E25531 /* SplashScreenView.swift */; };
 		C97D4CA926E186FA00FFCFBA /* SearchNewFiltersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97D4CA826E186FA00FFCFBA /* SearchNewFiltersRequest.swift */; };
 		C97D4CAD26E18A9400FFCFBA /* Encodable+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97D4CAC26E18A9400FFCFBA /* Encodable+Dictionary.swift */; };
+		C97D4CAF26E2BFBD00FFCFBA /* UITextField+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97D4CAE26E2BFBD00FFCFBA /* UITextField+Padding.swift */; };
+		C97D4CB126E2C54A00FFCFBA /* FiltersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97D4CB026E2C54A00FFCFBA /* FiltersModel.swift */; };
+		C97D4CB326E2CF6C00FFCFBA /* ManagerFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97D4CB226E2CF6C00FFCFBA /* ManagerFilters.swift */; };
 		C9A230DB26DEEDC000A6B58F /* UIView+SnapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A230DA26DEEDBF00A6B58F /* UIView+SnapKit.swift */; };
 		C9A230F826E00D8700A6B58F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A230F726E00D8700A6B58F /* BaseViewController.swift */; };
 		C9A2310126E010CC00A6B58F /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A230FB26E010CC00A6B58F /* NewsModel.swift */; };
@@ -106,6 +109,9 @@
 		C976F4FB26E10EBA00E25531 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		C97D4CA826E186FA00FFCFBA /* SearchNewFiltersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNewFiltersRequest.swift; sourceTree = "<group>"; };
 		C97D4CAC26E18A9400FFCFBA /* Encodable+Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Encodable+Dictionary.swift"; sourceTree = "<group>"; };
+		C97D4CAE26E2BFBD00FFCFBA /* UITextField+Padding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Padding.swift"; sourceTree = "<group>"; };
+		C97D4CB026E2C54A00FFCFBA /* FiltersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersModel.swift; sourceTree = "<group>"; };
+		C97D4CB226E2CF6C00FFCFBA /* ManagerFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerFilters.swift; sourceTree = "<group>"; };
 		C9A230DA26DEEDBF00A6B58F /* UIView+SnapKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SnapKit.swift"; sourceTree = "<group>"; };
 		C9A230F726E00D8700A6B58F /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		C9A230FB26E010CC00A6B58F /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
@@ -220,6 +226,7 @@
 			children = (
 				C9024D4526DC3A33004B39E6 /* Constants */,
 				C9024D6326DC56DF004B39E6 /* Extentions */,
+				C97D4CB226E2CF6C00FFCFBA /* ManagerFilters.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -241,6 +248,7 @@
 				C9C9DD4C26E05F7900F563E4 /* String+HTML.swift */,
 				C9024D6C26DC7854004B39E6 /* String+localize.swift */,
 				C976F4F926E10AA300E25531 /* UIStackView+removeAll.swift */,
+				C97D4CAE26E2BFBD00FFCFBA /* UITextField+Padding.swift */,
 				C9A230DA26DEEDBF00A6B58F /* UIView+SnapKit.swift */,
 			);
 			path = Extentions;
@@ -268,6 +276,7 @@
 			children = (
 				C9A230FA26E010CC00A6B58F /* News */,
 				C9A2310726E010D900A6B58F /* BaseResponse.swift */,
+				C97D4CB026E2C54A00FFCFBA /* FiltersModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -722,6 +731,7 @@
 				C9A2311B26E0114800A6B58F /* String+Date.swift in Sources */,
 				C97D4CAD26E18A9400FFCFBA /* Encodable+Dictionary.swift in Sources */,
 				C9A2310126E010CC00A6B58F /* NewsModel.swift in Sources */,
+				C97D4CB326E2CF6C00FFCFBA /* ManagerFilters.swift in Sources */,
 				C9C9DD4B26E05F0F00F563E4 /* DetailNewViewController.swift in Sources */,
 				C9024D4026DC37B0004B39E6 /* AppDelegate.swift in Sources */,
 				C9C9DD4926E05EEB00F563E4 /* NewDetailPresenter.swift in Sources */,
@@ -732,6 +742,7 @@
 				C9A2311A26E0114800A6B58F /* Date+TimeAgo.swift in Sources */,
 				C976F4FC26E10EBA00E25531 /* SplashScreenView.swift in Sources */,
 				C9A2311D26E0115A00A6B58F /* NewCellItem.swift in Sources */,
+				C97D4CB126E2C54A00FFCFBA /* FiltersModel.swift in Sources */,
 				C9A2310626E010CC00A6B58F /* GetNewsItemContent.swift in Sources */,
 				C9A2311226E0110000A6B58F /* APIClient.swift in Sources */,
 				C9024D3C26DC3254004B39E6 /* MainViewController.swift in Sources */,
@@ -741,6 +752,7 @@
 				C9C9DD5326E079F300F563E4 /* StarRatingView.swift in Sources */,
 				C976F4F826E1031900E25531 /* StarView.swift in Sources */,
 				C9A2310826E010D900A6B58F /* BaseResponse.swift in Sources */,
+				C97D4CAF26E2BFBD00FFCFBA /* UITextField+Padding.swift in Sources */,
 				C9F0CE8526DC26AA00F85118 /* Fonts.swift in Sources */,
 				C9F0CE8626DC26AA00F85118 /* Theme.swift in Sources */,
 				C9A2310526E010CC00A6B58F /* GetNewsResult.swift in Sources */,

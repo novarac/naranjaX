@@ -22,7 +22,45 @@
 "placeholderSeach" = "Buscar...";
 "noNewsToShow" = "No hay noticias para visualizar";
 "saveFilters"= "Aplicar";
+"resetFilters"= "Restablecer";/* Titles */
+"title_home" = "NaranjaX";
+"title_detail_news_item" = "Detalle Noticia";
+"title_filter_item"= "Filtros";
+
+/* Titles Form Filters */
+"title_filter_order_by" = "Ordenar por:";
+"title_filter_date_from" = "Fecha desde:";
+"title_filter_date_to" = "Fecha hasta:";
+"title_filter_type_view_detail" = "Ver detalle como:";
+"title_filter_quantity_items_by_page" = "Cantidad de items por página:";
+"title_filter_quantity_characters_autosearch" = "Cantidad de caracteres para autobusqueda";
+
+/* Times Ago */
+"ago" = "Hace";
+"hours" = "hora/s";
+"minutes" = "min/s";
+"days" = "d";
+"week" = "sem";
+
+
+"placeholderSeach" = "Buscar...";
+"noNewsToShow" = "No hay noticias para visualizar";
+"saveFilters"= "Aplicar";
 "resetFilters"= "Restablecer";
+
+"filterOrderByNewest" = "Recientes";
+"filterOrderByOldest" = "Antiguos";
+"filterOrderByRelevance" = "Relevantes";
+"filterOrderByNone" = "Nada";
+
+"filterDetailViewPresent" = "Vista Present";
+"filterDetailViewPush" = "Vista Push";
+
+"filterQuantityItemsByPageFive"= "5";
+"filterQuantityItemsByPageTen" = "10";
+"filterQuantityItemsByPageTwenty" = "20";
+"filterQuantityItemsByPageFifty" = "50";
+
 
 "filterOrderByNewest" = "Recientes";
 "filterOrderByOldest" = "Antiguos";

@@ -254,9 +254,26 @@ extension MainViewController: UISearchBarDelegate {
             presenter?.fetchNewsResetSearch(searchText: "")
             return
         }
-        if searchBar.text?.count ?? 0 > 3 {
+        
+        let filters = ManagerFilters().loadFilters()
+        let filtersQuantityCharactersAutoSearch = filters?.quantityCharactersAutoSearch ?? Constants.FiltersDefault.quantityCharactersAutoSearch
+        if filtersQuantityCharactersAutoSearch == 0 {
+            return
+        }
+        if searchBar.text?.count ?? 0 >= filtersQuantityCharactersAutoSearch {
             presenter?.fetchNewsResetSearch(searchText: searchText)
         }
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        let filters = ManagerFilters().loadFilters()
+        let filtersQuantityCharactersAutoSearch = filters?.quantityCharactersAutoSearch ?? Constants.FiltersDefault.quantityCharactersAutoSearch
+        if filtersQuantityCharactersAutoSearch == 0 {
+            searchBar.returnKeyType = .done
+        } else {
+            searchBar.returnKeyType = .search
+        }
+        return true
     }
     
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
