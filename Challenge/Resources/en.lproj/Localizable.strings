@@ -36,3 +36,8 @@
 "filterQuantityItemsByPageTen" = "10";
 "filterQuantityItemsByPageTwenty" = "20";
 "filterQuantityItemsByPageFifty" = "50";
+
+"title_error" = "Error!";
+"message_error" = "Ups!, algo salió mal";
+"try_again_button" = "Intentá otra vez";
+"updatePullToDown" = "↓ Actualizar ↓";

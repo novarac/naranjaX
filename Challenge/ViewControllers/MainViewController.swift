@@ -22,9 +22,7 @@ class MainViewController: BaseViewController {
     private var refreshControl: UIRefreshControl?
     private var toastMessageView: ToastMessageView!
     private var timerToast: Timer!
-    
     var isLoadingList = false
-    
     private var identifier = "Cell"
     
     // MARK: View Lifecycle
@@ -138,7 +136,7 @@ class MainViewController: BaseViewController {
         filterButton.addTarget(self, action: #selector(pressButtonFilter), for: .touchUpInside)
         
         setRefreshControl()
-        
+
         showScreenApp()
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshSearch), name: Notification.Name("refreshSearch"), object: nil)
@@ -185,7 +183,7 @@ class MainViewController: BaseViewController {
         refreshControl!.backgroundColor = .clear
         refreshControl!.tintColor = .primaryColor
         let attributesFontColor = [NSAttributedString.Key.foregroundColor: UIColor.primaryColor]
-        refreshControl!.attributedTitle = NSAttributedString(string: "↓ Actualizar ↓", attributes: attributesFontColor)
+        refreshControl!.attributedTitle = NSAttributedString(string: "updatePullToDown".localized, attributes: attributesFontColor)
         refreshControl!.addTarget(self, action: #selector(refreshPullToDown), for: .valueChanged)
         mainTableView.addSubview(refreshControl!)
     }
@@ -210,15 +208,12 @@ class MainViewController: BaseViewController {
         toastMessageView = ToastMessageView(frame: .zero)
         if let topController = getTopMostViewController() {
             topController.view.addSubview(toastMessageView)
-            
             toastMessageView.snp.makeConstraints({ make in
                 make.bottom.equalToSuperview()
                 make.height.equalTo(60)
                 make.leading.trailing.equalToSuperview()
             })
-            
             toastMessageView.alpha = 0
-            
             NotificationCenter.default.addObserver(self,
                                                    selector: #selector(showToastMessage),
                                                    name: Notification.Name("showToastMessage"),
@@ -230,7 +225,6 @@ class MainViewController: BaseViewController {
         if let topController = getTopMostViewController() {
             topController.view.bringSubviewToFront(toastMessageView)
             toastMessageView.showMessage(message: notif.object as? String ?? "")
-            
             UIView.animate(withDuration: 0.2) {
                 self.toastMessageView.alpha = 1
             }
@@ -254,11 +248,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let countItems = presenter?.getSectionItems(section: section).count ?? 0
-        
         thereAreNotNewsLabel.isHidden = countItems > 0 ? true : false
         thereAreNotNewsImage.isHidden = countItems > 0 ? true : false
         mainTableView.isHidden = countItems > 0 ? false : true
-        
         return countItems
     }
     
@@ -281,19 +273,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let filtersSaved = ManagerFilters().loadFilters()
-        if filtersSaved?.orderBy == 0 {
-            return 0.0
-        }
-        return 30.0
+        return filtersSaved?.orderBy == TypeFilterOrderBy.relevance.index ? 0.0 : 30.0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-//        let filtersSaved = ManagerFilters().loadFilters()
-//        if filtersSaved?.orderBy == 0 {
-//            return UIView(frame: .zero)
-//        }
-        
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
         
         let bgView = UIView(frame: .zero)
@@ -343,9 +326,9 @@ extension MainViewController: MainViewProtocol {
     }
     
     public func fetchNewsError(messageError: String) {
-        let alert = UIAlertController(title: "Error!", message: "Ups!, algo salió mal", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Intentá otra vez", style: .default, handler: { _ in
-            print("default")
+        let alert = UIAlertController(title: "title_error".localized, message: "message_error".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "try_again_button".localized, style: .default, handler: { _ in
+            
         }))
         present(alert, animated: true, completion: nil)
     }
@@ -355,11 +338,9 @@ extension MainViewController: UISearchBarDelegate {
     
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let text = searchBar.text, text.isEmpty {
-            
             presenter?.fetchNewsResetSearch(query: "")
             return
         }
-        
         let filters = ManagerFilters().loadFilters()
         let filtersQuantityCharactersAutoSearch = filters?.quantityCharactersAutoSearch ?? Constants.FiltersDefault.quantityCharactersAutoSearch
         if filtersQuantityCharactersAutoSearch == 0 {
@@ -373,11 +354,7 @@ extension MainViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         let filters = ManagerFilters().loadFilters()
         let filtersQuantityCharactersAutoSearch = filters?.quantityCharactersAutoSearch ?? Constants.FiltersDefault.quantityCharactersAutoSearch
-        if filtersQuantityCharactersAutoSearch == 0 {
-            searchBar.returnKeyType = .done
-        } else {
-            searchBar.returnKeyType = .search
-        }
+        searchBar.returnKeyType = filtersQuantityCharactersAutoSearch == 0 ? .done : .search
         return true
     }
     
