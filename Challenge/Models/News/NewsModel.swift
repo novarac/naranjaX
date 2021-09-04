@@ -19,4 +19,8 @@ public class NewsModel: NSObject, Decodable {
     override required convenience init() {
         self.init()
     }
+    
+    func description() -> String {
+        return "\(String(describing: webPublicationDate))"
+    }
 }

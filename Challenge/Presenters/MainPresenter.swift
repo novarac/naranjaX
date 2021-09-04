@@ -8,6 +8,14 @@ public protocol MainPresenterProtocol: AnyObject {
     func getItemByIndex(item: Int) -> NewsModel?
     func showFilterView(viewC: UIViewController)
     func showDetailNewView(viewC: UIViewController, row: Int)
+    func getSectionItems(section: Int) -> [NewsModel]
+    func getSectionsCount() -> Int
+    func getSectionItem(index: Int) -> String
+}
+
+struct TableItem {
+    let title: String
+    let creationDate: NSDate
 }
 
 public class MainPresenter: MainPresenterProtocol {
@@ -18,6 +26,10 @@ public class MainPresenter: MainPresenterProtocol {
     private var currentPage: Int = 1
     var currSearchText: String = ""
     private var filteredNews: [NewsModel] = []
+    
+    var sections: [String] = []
+    var sortedSections: [String] = []
+    var sectionItems: [NewsModel] = []
     
     init(view: MainViewProtocol, service: NewsServicesProtocol? = nil) {
         self.view = view
@@ -39,7 +51,7 @@ public class MainPresenter: MainPresenterProtocol {
         let filterOrderBy = TypeFilterOrderBy.allValues[filters!.orderBy]
         var filterQuantityItemsByPage = 0
         
-        switch TypeFilterQuantityItemsByPage.allValues[filters?.quantityItemsByPage ?? 0] as? TypeFilterQuantityItemsByPage {
+        switch TypeFilterQuantityItemsByPage.allValues[filters?.quantityItemsByPage ?? 0] {
         case .five:
             filterQuantityItemsByPage = 5
         case .ten:
@@ -48,8 +60,6 @@ public class MainPresenter: MainPresenterProtocol {
             filterQuantityItemsByPage = 20
         case .fifty:
             filterQuantityItemsByPage = 50
-        case .none:
-            filterQuantityItemsByPage = 5
         }
         
         let searchNewFiltersParams = SearchNewFiltersRequest(query: currSearchText,
@@ -80,7 +90,9 @@ public class MainPresenter: MainPresenterProtocol {
                 }
                 weakSelf.currentPage += 1
                 weakSelf.news += newsResult
-                weakSelf.view?.fetchNewsSuccess(news: newsResult)
+                weakSelf.sortNewByDate {
+                    weakSelf.view?.fetchNewsSuccess(news: newsResult)
+                }
             }
         }
     }
@@ -126,5 +138,41 @@ public class MainPresenter: MainPresenterProtocol {
         } else {
             viewC.present(vcDetail, animated: true, completion: nil)
         }
+    }
+    
+    func sortNewByDate(completion: () -> Void) {
+        sections = []
+        for new in news {
+            
+            let dateString: String = new.webPublicationDate?.getFormattedDate(fromFormat: Constants.Date.dateServerFormat,
+                                                                                  toNewFormat: Constants.Date.newsFormat) ?? ""
+            if !sections.contains(dateString) {
+                sections.append(dateString)
+            }
+        }
+        sortedSections = sections.sorted(by: >)
+        completion()
+    }
+    
+    public func getSectionItems(section: Int) -> [NewsModel] {
+        var sectionItems = [NewsModel]()
+        for item in news {
+            let newItem = item as NewsModel
+            let dateString = newItem.webPublicationDate?.getFormattedDate(fromFormat: Constants.Date.dateServerFormat,
+                                                                          toNewFormat: Constants.Date.newsFormat)
+            if dateString == sections[section] {
+                sectionItems.append(newItem)
+            }
+        }
+        
+        return sectionItems
+    }
+    
+    public func getSectionsCount() -> Int {
+        return sortedSections.count
+    }
+    
+    public func getSectionItem(index: Int) -> String {
+        return sortedSections[index]
     }
 }
