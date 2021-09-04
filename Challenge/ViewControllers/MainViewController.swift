@@ -203,8 +203,14 @@ class MainViewController: BaseViewController {
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return presenter?.getSectionsCount() ?? 0
+    }
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let countItems = presenter?.getNewItemsCount() else { return 0 }
+        let countItems = presenter?.getSectionItems(section: section).count ?? 0
+        
+//        guard let countItems = presenter?.getNewItemsCount() else { return 0 }
         
         thereAreNotNewsLabel.isHidden = countItems > 0 ? true : false
         thereAreNotNewsImage.isHidden = countItems > 0 ? true : false
@@ -215,7 +221,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? NewCellItem
-        cell?.configure(forNew: presenter?.getItemByIndex(item: indexPath.row))
+        let sectionItems = presenter?.getSectionItems(section: indexPath.section)
+        cell?.configure(forNew: sectionItems?[indexPath.row])
+        // TODO: cell without section
+//        cell?.configure(forNew: presenter?.getItemByIndex(item: indexPath.row))
         cell?.backgroundColor = indexPath.row % 2 == 0 ? .backgroundCells : .white
         return cell ?? UITableViewCell()
     }
@@ -224,6 +233,30 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         searchBarView.resignFirstResponder()
         presenter?.showDetailNewView(viewC: self, row: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
+        
+        let bgView = UIView(frame: .zero)
+        bgView.backgroundColor = .primaryColor.withAlphaComponent(0.5)
+        headerView.addSubview(bgView)
+        bgView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        let titleLabel = UILabel(frame: .zero)
+        headerView.addSubview(titleLabel)
+        titleLabel.font = .medium(18)
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = .white
+        titleLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.centerY.equalToSuperview()
+        }
+        titleLabel.text = presenter?.getSectionItem(index: section)
+        
+        return headerView
     }
 }
 
