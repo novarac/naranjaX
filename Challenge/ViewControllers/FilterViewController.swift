@@ -12,16 +12,15 @@ class FilterViewController: BaseViewController {
     private lazy var orderByLabel = UILabel(frame: .zero)
     private lazy var orderBySegmentControl = UISegmentedControl(frame: .zero)
     
-//    private lazy var dateTitleStackView = UIStackView(frame: .zero)
-//    private lazy var dateFromLabel = UILabel(frame: .zero)
-//    private lazy var dateToLabel = UILabel(frame: .zero)
-//
-//    private lazy var dateTextFieldsStackView = UIStackView(frame: .zero)
-//    private lazy var dateFromTextField = UITextField(frame: .zero)
-//    private var dateFromDatePicker = UIDatePicker()
-//    private lazy var dateToTextField = UITextField(frame: .zero)
-//    private var dateToDatePicker = UIDatePicker()
-//    private var datePickerToolBar = UIToolbar()
+    private lazy var dateTitleStackView = UIStackView(frame: .zero)
+    private lazy var dateFromLabel = UILabel(frame: .zero)
+    private lazy var dateToLabel = UILabel(frame: .zero)
+
+    private lazy var dateTextFieldsStackView = UIStackView(frame: .zero)
+    private lazy var dateFromTextField = UITextField(frame: .zero)
+    private var dateFromDatePicker = UIDatePicker()
+    private lazy var dateToTextField = UITextField(frame: .zero)
+    private var dateToDatePicker = UIDatePicker()
     
     private lazy var typeViewDetailLabel = UILabel(frame: .zero)
     private lazy var typeViewDetailSegmentControl = UISegmentedControl(frame: .zero)
@@ -60,13 +59,13 @@ class FilterViewController: BaseViewController {
         mainStackView.addArrangedSubview(orderByLabel)
         mainStackView.addArrangedSubview(orderBySegmentControl)
         
-//        mainStackView.addArrangedSubview(dateTitleStackView)
-//        dateTitleStackView.addArrangedSubview(dateFromLabel)
-//        dateTitleStackView.addArrangedSubview(dateToLabel)
-//
-//        mainStackView.addArrangedSubview(dateTextFieldsStackView)
-//        dateTextFieldsStackView.addArrangedSubview(dateFromTextField)
-//        dateTextFieldsStackView.addArrangedSubview(dateToTextField)
+        mainStackView.addArrangedSubview(dateTitleStackView)
+        dateTitleStackView.addArrangedSubview(dateFromLabel)
+        dateTitleStackView.addArrangedSubview(dateToLabel)
+
+        mainStackView.addArrangedSubview(dateTextFieldsStackView)
+        dateTextFieldsStackView.addArrangedSubview(dateFromTextField)
+        dateTextFieldsStackView.addArrangedSubview(dateToTextField)
         
         mainStackView.addArrangedSubview(typeViewDetailLabel)
         mainStackView.addArrangedSubview(typeViewDetailSegmentControl)
@@ -107,44 +106,39 @@ class FilterViewController: BaseViewController {
         orderBySegmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white],
                                                      for: .selected)
         
-//        dateFromLabel.font = .regular(16)
-//        dateFromLabel.textColor = .fontFiltersTitle
-//
-//        dateFromDatePicker.datePickerMode = .date
-//        dateFromDatePicker.maximumDate = Date()
-//        if #available(iOS 13.4, *) {
-//            dateFromDatePicker.preferredDatePickerStyle = .wheels
-//        }
-//
-//        datePickerToolBar.sizeToFit()
-//        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneFromButtonTapped))
-//        datePickerToolBar.setItems([doneButton], animated: true)
-//        dateFromTextField.inputAccessoryView = datePickerToolBar
-//
-//        dateFromTextField.font = .regular(16)
-//        dateFromTextField.textColor = .fontFiltersTitle
-//        dateFromTextField.layer.borderColor = UIColor.primaryColor.cgColor
-//        dateFromTextField.layer.borderWidth = 1
-//        dateFromTextField.layer.cornerRadius = 5
-//        dateFromTextField.inputView = dateFromDatePicker
-//        dateFromTextField.addPaddingLeft(padding: 10)
-//
-//        dateToLabel.font = .regular(16)
-//        dateToLabel.textColor = .fontFiltersTitle
-//
-//        dateToDatePicker.datePickerMode = .date
-//        dateToDatePicker.maximumDate = Date()
-//        if #available(iOS 13.4, *) {
-//            dateToDatePicker.preferredDatePickerStyle = .wheels
-//        }
-//
-//        dateToTextField.font = .regular(16)
-//        dateToTextField.textColor = .fontFiltersTitle
-//        dateToTextField.layer.borderColor = UIColor.primaryColor.cgColor
-//        dateToTextField.layer.borderWidth = 1
-//        dateToTextField.layer.cornerRadius = 5
-//        dateToTextField.inputView = dateToDatePicker
-//        dateToTextField.addPaddingLeft(padding: 10)
+        dateFromLabel.font = .regular(16)
+        dateFromLabel.textColor = .fontFiltersTitle
+
+        dateFromDatePicker.datePickerMode = .date
+        dateFromDatePicker.maximumDate = Date()
+        if #available(iOS 13.4, *) {
+            dateFromDatePicker.preferredDatePickerStyle = .wheels
+        }
+
+        dateFromTextField.font = .regular(16)
+        dateFromTextField.textColor = .fontFiltersTitle
+        dateFromTextField.layer.borderColor = UIColor.primaryColor.cgColor
+        dateFromTextField.layer.borderWidth = 1
+        dateFromTextField.layer.cornerRadius = 5
+        dateFromTextField.inputView = dateFromDatePicker
+        dateFromTextField.addPaddingLeft(padding: 10)
+
+        dateToLabel.font = .regular(16)
+        dateToLabel.textColor = .fontFiltersTitle
+
+        dateToDatePicker.datePickerMode = .date
+        dateToDatePicker.maximumDate = Date()
+        if #available(iOS 13.4, *) {
+            dateToDatePicker.preferredDatePickerStyle = .wheels
+        }
+
+        dateToTextField.font = .regular(16)
+        dateToTextField.textColor = .fontFiltersTitle
+        dateToTextField.layer.borderColor = UIColor.primaryColor.cgColor
+        dateToTextField.layer.borderWidth = 1
+        dateToTextField.layer.cornerRadius = 5
+        dateToTextField.inputView = dateToDatePicker
+        dateToTextField.addPaddingLeft(padding: 10)
         
         typeViewDetailLabel.font = .regular(16)
         typeViewDetailLabel.textColor = .fontFiltersTitle
@@ -218,7 +212,7 @@ class FilterViewController: BaseViewController {
         closeButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(20)
             make.top.equalToSuperview().offset(25)
-            make.width.height.equalTo(15)
+            make.width.height.equalTo(30)
         }
         
         orderByLabel.snp.makeConstraints { make in
@@ -229,31 +223,31 @@ class FilterViewController: BaseViewController {
             make.leading.trailing.equalToSuperview().inset(20)
         }
                 
-//        dateTitleStackView.snp.makeConstraints { make in
-//            make.leading.trailing.equalToSuperview().inset(20)
-//        }
-//
-//        dateFromLabel.snp.makeConstraints { make in
-//            make.width.equalToSuperview().dividedBy(2).inset(5)
-//        }
-//
-//        dateToLabel.snp.makeConstraints { make in
-//            make.width.equalToSuperview().dividedBy(2).inset(5)
-//        }
-//
-//        dateTextFieldsStackView.snp.makeConstraints { make in
-//            make.leading.trailing.equalToSuperview().inset(20)
-//        }
-//
-//        dateFromTextField.snp.makeConstraints { make in
-//            make.width.equalToSuperview().dividedBy(2).inset(5)
-//            make.height.equalTo(30)
-//        }
-//
-//        dateToTextField.snp.makeConstraints { make in
-//            make.width.equalToSuperview().dividedBy(2).inset(5)
-//            make.height.equalTo(30)
-//        }
+        dateTitleStackView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+        }
+
+        dateFromLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview().dividedBy(2).inset(5)
+        }
+
+        dateToLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview().dividedBy(2).inset(5)
+        }
+
+        dateTextFieldsStackView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+        }
+
+        dateFromTextField.snp.makeConstraints { make in
+            make.width.equalToSuperview().dividedBy(2).inset(5)
+            make.height.equalTo(30)
+        }
+
+        dateToTextField.snp.makeConstraints { make in
+            make.width.equalToSuperview().dividedBy(2).inset(5)
+            make.height.equalTo(30)
+        }
         
         typeViewDetailLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
@@ -326,36 +320,20 @@ class FilterViewController: BaseViewController {
         orderBySegmentControl.insertSegment(withTitle: TypeFilterOrderBy.oldest.rawValue.localized,
                                             at: 2,
                                             animated: true)
-        orderBySegmentControl.insertSegment(withTitle: TypeFilterOrderBy.none.rawValue.localized,
-                                            at: 3,
-                                            animated: true)
-//        orderBySegmentControl.addTarget(self,
-//                                        action: #selector(orderBySegmentControlChange),
-//                                        for: .valueChanged)
         orderBySegmentControl.selectedSegmentIndex = 1
         
-//        dateTitleStackView.axis = .horizontal
-//        dateTitleStackView.spacing = 10
-//
-//        dateFromLabel.text = "title_filter_date_from".localized
-//
-//        dateToLabel.text = "title_filter_date_to".localized
-//
-//        dateTextFieldsStackView.axis = .horizontal
-//        dateTextFieldsStackView.spacing = 10
-//
-//        dateFromDatePicker.addTarget(self, action: #selector(dateFromValueChanged), for: .valueChanged)
-//        let doneButton = UIBarButtonItem.init(title: "Done",
-//                                              style: .done,
-//                                              target: self,
-//                                              action: #selector(dateFromPickerDone))
-//        doneButton.tintColor = .primaryColor
-//        let toolBar = UIToolbar.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
-//        toolBar.setItems(
-//            [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), doneButton],
-//            animated: true)
-////        dateFromDatePicker.inputAccessoryView = toolBar
-//        dateToDatePicker.addTarget(self, action: #selector(dateToValueChanged), for: .valueChanged)
+        dateTitleStackView.axis = .horizontal
+        dateTitleStackView.spacing = 10
+
+        dateFromLabel.text = "title_filter_date_from".localized
+
+        dateToLabel.text = "title_filter_date_to".localized
+
+        dateTextFieldsStackView.axis = .horizontal
+        dateTextFieldsStackView.spacing = 10
+
+        dateFromDatePicker.addTarget(self, action: #selector(dateFromValueChanged), for: .valueChanged)
+        dateToDatePicker.addTarget(self, action: #selector(dateToValueChanged), for: .valueChanged)
         
         typeViewDetailLabel.text = "title_filter_type_view_detail".localized
         typeViewDetailSegmentControl.insertSegment(withTitle: TypeFilterDetailView.present.rawValue.localized,
@@ -364,9 +342,6 @@ class FilterViewController: BaseViewController {
         typeViewDetailSegmentControl.insertSegment(withTitle: TypeFilterDetailView.push.rawValue.localized,
                                                    at: 1,
                                                    animated: true)
-//        typeViewDetailSegmentControl.addTarget(self,
-//                                        action: #selector(typeViewDetailSegmentControlChange),
-//                                        for: .valueChanged)
         typeViewDetailSegmentControl.selectedSegmentIndex = 1
         
         quantityItemsByPageLabel.text = "title_filter_quantity_items_by_page".localized
@@ -382,9 +357,6 @@ class FilterViewController: BaseViewController {
         quantityItemsByPageSegmentControl.insertSegment(withTitle: TypeFilterQuantityItemsByPage.fifty.rawValue.localized,
                                                         at: 3,
                                                         animated: true)
-//        quantityItemsByPageSegmentControl.addTarget(self,
-//                                        action: #selector(quantityItemsByPageSegmentControlChange),
-//                                        for: .valueChanged)
         quantityItemsByPageSegmentControl.selectedSegmentIndex = 1
         
         quantityCharactersAutoSearchLabel.text = "title_filter_quantity_characters_autosearch".localized
@@ -412,40 +384,30 @@ class FilterViewController: BaseViewController {
         
         populateFilters()
     }
-    
-    @objc func dateFromPickerDone() {
-//       dateFromDatePicker.resignFirstResponder()
-   }
-    
+        
     @objc func dateFromValueChanged() {
-//        let dateString = "\(dateFromDatePicker.date)"
-//        if let date = dateString.getFormattedDate(
-//            fromFormat: Constants.Date.pickerDate,
-//            toNewFormat: Constants.Date.newsFormat) {
-//            dateFromTextField.text = date
-//        }
+        let dateString = "\(dateFromDatePicker.date)"
+        if let date = dateString.getFormattedDate(
+            fromFormat: Constants.Date.pickerDate,
+            toNewFormat: Constants.Date.newsFormat) {
+            dateFromTextField.text = date
+        }
     }
-    
-    @objc func doneFromButtonTapped() {
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-//        dateFromTextField.text = dateFormatter.string(from: dateFromDatePicker.date)
-    }
-    
+        
     @objc func dateToValueChanged(_ sender: UIDatePicker) {
-//        let dateString = "\(dateToDatePicker.date)"
-//        if let date = dateString.getFormattedDate(
-//            fromFormat: Constants.Date.pickerDate,
-//            toNewFormat: Constants.Date.newsFormat) {
-//            dateToTextField.text = date
-//        }
+        let dateString = "\(dateToDatePicker.date)"
+        if let date = dateString.getFormattedDate(
+            fromFormat: Constants.Date.pickerDate,
+            toNewFormat: Constants.Date.newsFormat) {
+            dateToTextField.text = date
+        }
     }
     
     func populateFilters() {
         if let filters = ManagerFilters().loadFilters() {
             orderBySegmentControl.selectedSegmentIndex = filters.orderBy
-//            dateFromTextField.text = filters.dateFrom //birthDatePicker.date
-//            dateToTextField.text = filters.dateFrom
+            dateFromTextField.text = filters.dateFrom
+            dateToTextField.text = filters.dateTo
             typeViewDetailSegmentControl.selectedSegmentIndex = filters.viewDetails
             quantityItemsByPageSegmentControl.selectedSegmentIndex = filters.quantityItemsByPage
             quantityCharactersAutoSearchCurrentLabel.text = "\(filters.quantityCharactersAutoSearch)"
@@ -458,8 +420,8 @@ class FilterViewController: BaseViewController {
         where Constants.FiltersDefault.orderBy == TypeFilterOrderBy.allValues[index] {
                 orderBySegmentControl.selectedSegmentIndex = index
         }
-//        dateFromTextField.text = Constants.FiltersDefault.dateFrom
-//        dateToTextField.text = Constants.FiltersDefault.dateTo
+        dateFromTextField.text = Constants.FiltersDefault.dateFrom
+        dateToTextField.text = Constants.FiltersDefault.dateTo
         for index in 0...TypeFilterDetailView.allValues.count - 1
         where Constants.FiltersDefault.viewDetails == TypeFilterDetailView.allValues[index] {
                 typeViewDetailSegmentControl.selectedSegmentIndex = index
@@ -479,8 +441,8 @@ class FilterViewController: BaseViewController {
     
     func saveFilters() {
         let filters = FilterModel(orderBy: orderBySegmentControl.selectedSegmentIndex,
-                                  dateFrom: "01-01-2021", //dateFromTextField.text ?? Constants.FiltersDefault.dateFrom,
-                                  dateTo: "01-01-2021", //dateToTextField.text ?? Constants.FiltersDefault.dateTo,
+                                  dateFrom: dateFromTextField.text ?? Constants.FiltersDefault.dateFrom,
+                                  dateTo: dateToTextField.text ?? Constants.FiltersDefault.dateTo,
                                   viewDetails: typeViewDetailSegmentControl.selectedSegmentIndex,
                                   quantityItemsByPage: quantityItemsByPageSegmentControl.selectedSegmentIndex,
                                   quantityCharactersAutoSearch: Int(quantityCharactersAutoSearchSlider.value))
@@ -491,24 +453,13 @@ class FilterViewController: BaseViewController {
         dismiss(animated: true, completion: nil)
     }
     
-//    @objc func orderBySegmentControlChange() {
-////        print(orderBySegmentControl.selectedSegmentIndex)
-//    }
-    
-//    @objc func typeViewDetailSegmentControlChange() {
-////        print(typeViewDetailSegmentControl.selectedSegmentIndex)
-//    }
-    
-//    @objc func quantityItemsByPageSegmentControlChange() {
-////        print(quantityItemsByPageSegmentControl.selectedSegmentIndex)
-//    }
-    
     @objc func quantityCharactersAutoSearchSliderChangeValue() {
         quantityCharactersAutoSearchCurrentLabel.text = "\(Int(quantityCharactersAutoSearchSlider.value))"
     }
     
     @objc func pressSaveButton() {
         saveFilters()
+        NotificationCenter.default.post(name: Notification.Name("refreshSearch"), object: nil)
         dismiss(animated: true, completion: nil)
     }
     

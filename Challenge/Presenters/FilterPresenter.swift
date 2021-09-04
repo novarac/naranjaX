@@ -4,9 +4,8 @@ enum TypeFilterOrderBy: String, CaseIterable {
     case relevance = "filterOrderByRelevance"
     case newest = "filterOrderByNewest"
     case oldest = "filterOrderByOldest"
-    case none = "filterOrderByNone"
     
-    static let allValues = [relevance, newest, oldest, none]
+    static let allValues = [relevance, newest, oldest]
 }
 
 enum TypeFilterDetailView: String, CaseIterable {
