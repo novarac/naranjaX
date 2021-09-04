@@ -10,12 +10,15 @@ public class MainPresenterMock: MainPresenterProtocol {
     init(view: MainViewProtocol, service: NewsServicesProtocol? = nil) {
         self.view = view
         self.service = service
-        fetchNews()
+        self.fetchNews(searchText: "")
     }
     
-    func fetchNews(indexPage: Int = 1) {
-        let item = NewsModel()
-        item.apiUrl = ""
+    public func fetchNews(searchText: String = "") {
+        let item = NewsModel(webPublicationDate: "2021-01-01",
+                             webTitle: "title",
+                             apiUrl: "",
+                             sectionName: "sectionName",
+                             fields: nil)
         news.append(item)
     }
     
@@ -24,13 +27,7 @@ public class MainPresenterMock: MainPresenterProtocol {
     }
     
     public func getItemByIndex(item: Int) -> NewsModel? {
-        let model = NewsModel()
-        model.apiUrl = "test"
-        return model
-    }
-    
-    public func fetchNews(searchText: String) {
-        
+        return news[item]
     }
     
     public func fetchNewsResetSearch(searchText: String) {

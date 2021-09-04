@@ -3,6 +3,10 @@ import XCTest
 
 class ChallengeTests: XCTestCase {
 
+    override func setUp() {
+        
+    }
+    
     func test_memoryLeakController() {
         var viewC: MainViewController? = MainViewController()
         var presenter: MainPresenter? = MainPresenter(view: viewC!, service: NewsServices())
@@ -29,5 +33,25 @@ class ChallengeTests: XCTestCase {
             XCTAssertNil(viewC)
             XCTAssertNil(presenter)
         }
+    }
+    
+    func test_main_getNewItemsCount() {
+        let view = MainViewController()
+        let service = NewsServices()
+        let presenter = MainPresenterMock(view: view, service: service)
+        
+        XCTAssertTrue(presenter.getNewItemsCount() == 1)
+        XCTAssertEqual(presenter.getNewItemsCount(), 1)
+    }
+    
+    func test_main_getNewItemsCountWithFilterOrderBy() {
+        let view = MainViewController()
+        let service = NewsServices()
+        let presenter = MainPresenterMock(view: view, service: service)
+        
+        presenter.fetchNews()
+        
+        XCTAssertTrue(presenter.getNewItemsCount() == 1)
+        XCTAssertEqual(presenter.getNewItemsCount(), 1)
     }
 }
