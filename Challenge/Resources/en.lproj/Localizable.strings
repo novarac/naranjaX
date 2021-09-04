@@ -32,6 +32,7 @@
 "filterDetailViewPresent" = "Vista Present";
 "filterDetailViewPush" = "Vista Push";
 
+"filterQuantityItemsByPageFive"= "5";
 "filterQuantityItemsByPageTen" = "10";
 "filterQuantityItemsByPageTwenty" = "20";
 "filterQuantityItemsByPageFifty" = "50";

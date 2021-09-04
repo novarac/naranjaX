@@ -35,16 +35,32 @@ public class MainPresenter: MainPresenterProtocol {
         
         let fieldsString = "starRating,headline,thumbnail,short-url"
         let escapedFieldsString = fieldsString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        let filters = ManagerFilters().loadFilters()
+        let filterOrderBy = TypeFilterOrderBy.allValues[filters!.orderBy]
+        var filterQuantityItemsByPage = 0
+        
+        switch TypeFilterQuantityItemsByPage.allValues[filters?.quantityItemsByPage ?? 0] as? TypeFilterQuantityItemsByPage {
+        case .five:
+            filterQuantityItemsByPage = 5
+        case .ten:
+            filterQuantityItemsByPage = 10
+        case .twenty:
+            filterQuantityItemsByPage = 20
+        case .fifty:
+            filterQuantityItemsByPage = 50
+        case .none:
+            filterQuantityItemsByPage = 5
+        }
         
         let searchNewFiltersParams = SearchNewFiltersRequest(query: currSearchText,
                                                        startIndex: 1,
-                                                       pageSize: 10,
+                                                       pageSize: filterQuantityItemsByPage,
                                                        page: currentPage,
                                                        format: "json",
                                                        fromDate: "2021-01-01",
                                                        showTags: "contributor",
                                                        showFields: escapedFieldsString,
-                                                       orderBy: "relevance",
+                                                       orderBy: "\(filterOrderBy)", //"relevance",
                                                        tag: "film/film,tone/reviews")
         
         service?.fetchNews(params: searchNewFiltersParams) { [weak self] (news, error) in
@@ -98,7 +114,16 @@ public class MainPresenter: MainPresenterProtocol {
     public func showDetailNewView(viewC: UIViewController, row: Int) {
         let vcDetail = DetailNewViewController()
         vcDetail.currentNew = getItemByIndex(item: row)
-//        viewC.present(vcDetail, animated: true, completion: nil)
-        viewC.navigationController?.pushViewController(vcDetail, animated: true)
+        
+        let filters = ManagerFilters().loadFilters()
+        if let filterViewDetail = filters?.viewDetails {
+            if TypeFilterDetailView.present == TypeFilterDetailView.allValues[filterViewDetail] {
+                viewC.present(vcDetail, animated: true, completion: nil)
+            } else {
+                viewC.navigationController?.pushViewController(vcDetail, animated: true)
+            }
+        } else {
+            viewC.present(vcDetail, animated: true, completion: nil)
+        }
     }
 }

@@ -3,9 +3,9 @@ import Foundation
 struct SearchNewFiltersRequest: Codable {
     
     var query: String?
-    var startIndex: Int? = 1
-    var pageSize: Int? = 10
-    var page: Int? = 1
+    var startIndex: Int = 1
+    var pageSize: Int = 10
+    var page: Int = 1
     var format: String?
     var fromDate: String?
     var toDate: String?
