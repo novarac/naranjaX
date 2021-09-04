@@ -192,7 +192,14 @@ extension DetailNewViewController: NewDetailProtocol {
     }
     
     func fetchNewItemError() {
-        mainStackView.isHidden = true
+        let alert = UIAlertController(title: "Error!", message: "Ups!, algo salió mal", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Intentá otra vez", style: .default, handler: { _ in
+            print("default")
+            self.dismiss(animated: true) {
+                
+            }
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     func showLoader() {

@@ -2,7 +2,7 @@ import UIKit
 
 public protocol MainViewProtocol: AnyObject {
     func fetchNewsSuccess(news: [NewsModel])
-    func fetchNewsError()
+    func fetchNewsError(messageError: String)
     func hideLoader()
     func showLoader()
 }
@@ -20,6 +20,9 @@ class MainViewController: BaseViewController {
     private lazy var thereAreNotNewsImage = UIImageView(frame: .zero)
     private lazy var splashScreenView = SplashScreenView(frame: .zero)
     private var refreshControl: UIRefreshControl?
+    private var toastMessageView: ToastMessageView!
+    private var timerToast: Timer!
+    
     var isLoadingList = false
     
     private var identifier = "Cell"
@@ -139,6 +142,8 @@ class MainViewController: BaseViewController {
         showScreenApp()
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshSearch), name: Notification.Name("refreshSearch"), object: nil)
+        
+        configureToastMessageView()
     }
     
     // MARK: Public Methods
@@ -197,6 +202,46 @@ class MainViewController: BaseViewController {
                 isLoadingList = true
                 presenter?.fetchNewsMoreItems()
             }
+        }
+    }
+    
+    // MARK: Toast message
+    func configureToastMessageView() {
+        toastMessageView = ToastMessageView(frame: .zero)
+        if let topController = getTopMostViewController() {
+            topController.view.addSubview(toastMessageView)
+            
+            toastMessageView.snp.makeConstraints({ make in
+                make.bottom.equalToSuperview()
+                make.height.equalTo(60)
+                make.leading.trailing.equalToSuperview()
+            })
+            
+            toastMessageView.alpha = 0
+            
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(showToastMessage),
+                                                   name: Notification.Name("showToastMessage"),
+                                                   object: nil)
+        }
+    }
+    
+    @objc func showToastMessage(notif: Notification) {
+        if let topController = getTopMostViewController() {
+            topController.view.bringSubviewToFront(toastMessageView)
+            toastMessageView.showMessage(message: notif.object as? String ?? "")
+            
+            UIView.animate(withDuration: 0.2) {
+                self.toastMessageView.alpha = 1
+            }
+            timerToast = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(timerToastFinish), userInfo: nil, repeats: false)
+        }
+    }
+    
+    @objc func timerToastFinish() {
+        timerToast.invalidate()
+        UIView.animate(withDuration: 0.2) {
+            self.toastMessageView.alpha = 0
         }
     }
 }
@@ -297,8 +342,12 @@ extension MainViewController: MainViewProtocol {
         mainTableView.setContentOffset(.zero, animated: false)
     }
     
-    public func fetchNewsError() {
-        print("fetchNewsError")
+    public func fetchNewsError(messageError: String) {
+        let alert = UIAlertController(title: "Error!", message: "Ups!, algo salió mal", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Intentá otra vez", style: .default, handler: { _ in
+            print("default")
+        }))
+        present(alert, animated: true, completion: nil)
     }
 }
 

@@ -46,14 +46,12 @@ public class MainPresenter: MainPresenterProtocol {
             guard let weakSelf = self else {
                 return
             }
-
             weakSelf.view?.hideLoader()
-            if let error = error {
-                print(error)
-                weakSelf.view?.fetchNewsError()
+            if let _ = error {
+                weakSelf.view?.fetchNewsError(messageError: "error_get_news")
             } else {
                 guard let newsResult = news?.response?.results else {
-                    weakSelf.view?.fetchNewsError()
+                    weakSelf.view?.fetchNewsError(messageError: "error_get_news")
                     return
                 }
                 if weakSelf.currentPage == 1 {
@@ -67,6 +65,10 @@ public class MainPresenter: MainPresenterProtocol {
                 }
             }
         }
+    }
+    
+    func fetchNewsError(messageError: String) {
+//        NotificationCenter.default.post(name: Notification.Name("showToastMessage"), object: messageError)
     }
     
     func addSearchNewFiltersParams(query: String) -> SearchNewFiltersRequest {
